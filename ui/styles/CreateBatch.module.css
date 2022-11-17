@@ -1,0 +1,79 @@
+.labels {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    justify-items: center;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.138);
+}
+
+.labels label {
+    font-size: 1.9rem;
+    text-transform: capitalize;
+    font-weight: 800;
+}
+
+.animals {
+    min-height: 10rem;
+    max-height: 36rem;
+    overflow-y: auto;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.138);
+}
+
+.animals div:nth-child(even) {
+    background-color: rgba(0, 0, 0, 0.053);
+}
+
+.batchInfo {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.batchInfo div label {
+    text-transform: capitalize;
+}
+
+.batchInfo div input {
+    display: block;
+    margin-top: .5rem;
+    padding: .5rem 1.5rem;
+    font: inherit;
+}
+
+.batchInfo div:nth-child(4) {
+    grid-column: 1 / 4;
+}
+
+.batchInfo div:nth-child(3) input {
+    width: 10rem;
+}
+
+.batchInfo div:nth-child(4) textarea {
+    display: block;
+    font: inherit;
+    padding: .5rem;
+    resize: none;
+}
+
+.button {
+    padding: 1rem 2rem;
+    font: inherit;
+    border: none;
+    cursor: pointer;
+    margin: 1.7rem 0;
+    background-image: linear-gradient(to right, #83d919, #8cde17, #95e216, #9fe714, #a8eb12);
+    border-radius: 4px;
+    text-transform: uppercase;
+    font-weight: 800;
+}
+
+.grayButton {
+    padding: 1rem 2rem;
+    font: inherit;
+    border: none;
+    cursor: pointer;
+    margin: 1.7rem 0;
+    background-image: linear-gradient(to right, #83d919, #8cde17, #95e216, #9fe714, #a8eb12);
+    border-radius: 4px;
+    text-transform: uppercase;
+    font-weight: 800;
+}

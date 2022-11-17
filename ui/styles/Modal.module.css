@@ -1,0 +1,24 @@
+.container {
+    background: antiquewhite;
+    display: block;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 80vw;
+    min-width: 35vw;
+    max-height: 90vh;
+    min-height: 20vh;
+    border-radius: 16px;
+    padding: 2rem;
+}
+
+.button {
+    cursor: pointer;
+    background: none;
+    border: none;
+    position: absolute;
+    top: 5%;
+    right: 5%;
+    font-size: large;
+}

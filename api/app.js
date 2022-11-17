@@ -2,8 +2,11 @@ const express = require("express");
 const animalRouter = require("./routes/animalRoute");
 const batchRouter = require("./routes/batchRoute");
 const pastureRouter = require("./routes/pastureRouter");
+const cors = require("cors");
 
 const app = express();
+
+app.use(cors());
 
 app.use(
   express.json({

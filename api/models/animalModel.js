@@ -40,11 +40,10 @@ const animalSchema = new Schema({
   },
   birthdate: {
     type: Date,
-    required: true,
   },
   health: {
     type: String,
-    enum: ["Critical", "Poor", "Good", "Healthy"],
+    enum: ["critical", "poor", "good", "healthy"],
     default: "Healthy",
   },
   priceRatio: {

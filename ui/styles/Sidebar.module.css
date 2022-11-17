@@ -1,0 +1,33 @@
+.sidebar {
+   /* background-color: blueviolet; */
+    width: 24rem;
+    height: 100%;
+    overflow-y: auto;
+    padding: 3rem 3rem;
+    position: relative;
+}
+
+.sidebar::after {
+    content: '';
+    background-color: rgba(0, 0, 0, 0.103);
+    display: block;
+    width: .2rem;
+    height: 40rem;
+    position: absolute;
+    top: 20%;
+    left: 99%;
+}
+
+.sidebar ul:not(:last-of-type) {
+    margin-bottom: 5rem;
+}
+
+.sidebar ul:first-of-type {
+    margin-top: 3rem;
+}
+
+.sidebar ul li {
+    margin-bottom: 2rem;
+    width: 100%;
+    display: flex;
+}

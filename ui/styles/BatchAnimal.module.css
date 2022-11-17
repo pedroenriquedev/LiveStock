@@ -1,0 +1,23 @@
+.animalContainer {
+    margin-bottom: 1rem;
+    padding: 0 1rem;
+    min-height: 5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    align-items: center;
+    justify-items: center;
+    position: relative;
+}
+
+.animalContainer div {
+    position: relative;
+}
+
+.button {
+    position: absolute;
+    right: 3%;
+}
+.animalContainer div {
+    display: flex;
+    flex-direction: column;
+}

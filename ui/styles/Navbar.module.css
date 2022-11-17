@@ -1,0 +1,12 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 1rem 2rem;
+    position: fixed;
+    /* background: rgb(76, 169, 203); */
+}
+
+.link {
+    font-size: 1.8rem;
+}
