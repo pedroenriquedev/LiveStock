@@ -43,6 +43,17 @@
     grid-column: 1 / 4;
 }
 
+.batchInfo div:nth-child(2) {
+    justify-self: center;
+}
+
+.batchInfo div:nth-child(3) {
+    justify-self: flex-end;
+}
+
+
+
+
 .batchInfo div:nth-child(3) input {
     width: 10rem;
 }

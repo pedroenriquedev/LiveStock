@@ -76,7 +76,6 @@ const CreateNewBatch = () => {
   };
 
   const handleDeleteAnimal = (index) => {
-    console.log(index);
     const newAnimals = [...animals];
     newAnimals.splice(index, 1);
     setAnimals(newAnimals);
@@ -150,8 +149,8 @@ const CreateNewBatch = () => {
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              rows="5"
-              cols="50"
+              rows="3"
+              cols="40"
             />
           </div>
         </div>
