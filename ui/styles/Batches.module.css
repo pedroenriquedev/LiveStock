@@ -1,0 +1,19 @@
+.batch {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    border: 1px solid rgba(0, 0, 0, 0.171);
+    border-radius: 4px;
+    margin: 2rem 0;
+    padding: .5rem 2rem;
+}
+
+.batch:hover {
+    background: rgba(0, 0, 0, 0.171);
+    border-color: white;
+}
+
+.batch h3 {
+    font-size: 1.5rem;
+    color: rgba(0, 0, 0, 0.334);
+}

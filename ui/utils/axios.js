@@ -22,5 +22,6 @@ export function handleError(error) {
     // Something happened in setting up the request that triggered an Error
     console.log("Error", error.message);
   }
+  console.log("something went wrong.please try again");
   console.log(error.config);
 }

@@ -70,6 +70,7 @@
     font: inherit;
     border: none;
     cursor: pointer;
+    width: 16.69rem;
     margin: 1.7rem 0;
     background-image: linear-gradient(to right, #83d919, #8cde17, #95e216, #9fe714, #a8eb12);
     border-radius: 4px;
@@ -77,14 +78,7 @@
     font-weight: 800;
 }
 
-.grayButton {
-    padding: 1rem 2rem;
-    font: inherit;
-    border: none;
-    cursor: pointer;
-    margin: 1.7rem 0;
-    background-image: linear-gradient(to right, #83d919, #8cde17, #95e216, #9fe714, #a8eb12);
-    border-radius: 4px;
-    text-transform: uppercase;
-    font-weight: 800;
+.disabled {
+    background: #b8b8b8;
+    pointer-events: none;
 }

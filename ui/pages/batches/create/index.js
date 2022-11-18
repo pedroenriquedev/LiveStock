@@ -12,6 +12,7 @@ const CreateNewBatch = () => {
 
   const [isModalOpen, setModalOpen] = useState(false);
   const [rate, setRate] = useState(249);
+  const [isFinalizingBatch, setIsFinalizingBatch] = useState(false);
 
   const [date, setDate] = useState(todayString);
   const [seller, setSeller] = useState("");
@@ -89,6 +90,9 @@ const CreateNewBatch = () => {
         // make button unclickable instead and gray
         throw new Error("Must have at least one animal");
       const animalsIds = [];
+
+      setIsFinalizingBatch(true);
+
       animals.forEach(async (animal) => {
         // animals are created
         const res = await api.post(`/api/v1/animal`, animal);
@@ -111,6 +115,7 @@ const CreateNewBatch = () => {
     } catch (error) {
       handleError(error);
     }
+    setIsFinalizingBatch(false);
   };
 
   return (
@@ -181,9 +186,13 @@ const CreateNewBatch = () => {
           </div>
         </div>
         <button
-          className={animals.length > 0 ? styles.button : styles.grayButton}
+          className={
+            animals.length > 0
+              ? styles.button
+              : `${styles.button} ${styles.disabled}`
+          }
         >
-          Finalize batch
+          {isFinalizingBatch ? `. . .` : "Finalize batch"}
         </button>
       </form>
       <div>
