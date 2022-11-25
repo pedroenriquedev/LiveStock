@@ -8,6 +8,7 @@ const NewAnimal = ({
   getAnimal,
   closeModal,
 }) => {
+  const [date, setDate] = useState(undefined);
   const [name, setName] = useState("");
   const [color, setColor] = useState("");
   const [breed, setBreed] = useState("");
@@ -19,6 +20,10 @@ const NewAnimal = ({
   const handleForm = (e) => {
     e.preventDefault();
 
+    if (date === undefined) {
+      date = new Date();
+    }
+
     const animal = {
       name,
       color,
@@ -27,6 +32,7 @@ const NewAnimal = ({
       priceRatio: customRate,
       health,
       description,
+      dateOfPurchase: date,
     };
     getAnimal(animal);
     closeModal();
@@ -63,7 +69,12 @@ const NewAnimal = ({
         {showDateOfPurchase && (
           <div>
             <label>date of purchase</label>
-            <input placeholder="date of purchase" type="date" />
+            <input
+              placeholder="date of purchase"
+              type="date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+            />
           </div>
         )}
 

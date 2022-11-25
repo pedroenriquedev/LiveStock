@@ -95,6 +95,7 @@ const CreateNewBatch = () => {
 
       animals.forEach(async (animal) => {
         // animals are created
+        animal.dateOfPurchase = date;
         const res = await api.post(`/api/v1/animal`, animal);
         animalsIds.push(res.data.newDoc._id);
       });

@@ -2,7 +2,7 @@ const Animal = require("../models/animalModel");
 
 exports.getAllAnimals = async (req, res, next) => {
   try {
-    const animals = await Animal.find();
+    const animals = await Animal.find().sort({ dateOfPurchase: -1 });
     res.status(200).json({
       status: "success",
       data: {

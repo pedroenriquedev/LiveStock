@@ -34,7 +34,6 @@ const pastureSchema = new Schema({
   ],
   area: {
     type: Number,
-    required: true,
     min: [1, `Pasture area can't be less than 1`],
   },
 });

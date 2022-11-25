@@ -2,7 +2,7 @@ import Link from "next/link";
 import { useState } from "react";
 import Modal from "../components/Modal";
 import NewAnimal from "../components/NewAnimal";
-import api from "../utils/axios";
+import { api } from "../utils/axios";
 
 export default function Home() {
   const [isModalOpen, setModalOpen] = useState(false);

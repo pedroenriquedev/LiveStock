@@ -8,6 +8,9 @@ const weightLogSchema = new Schema({
     max: [5000, `Weight can't be greater than 5000 pounds.`],
     required: true,
   },
+  previousWeight: {
+    type: Number,
+  },
   date: {
     type: Date,
     required: true,
@@ -43,8 +46,17 @@ const animalSchema = new Schema({
   },
   health: {
     type: String,
-    enum: ["critical", "poor", "good", "healthy"],
-    default: "Healthy",
+    enum: [
+      "critical",
+      "poor",
+      "good",
+      "healthy",
+      "Critical",
+      "Healthy",
+      "Poor",
+      "Good",
+    ],
+    default: "healthy",
   },
   priceRatio: {
     type: Number,
