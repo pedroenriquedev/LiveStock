@@ -1,8 +1,17 @@
 const Animal = require("../models/animalModel");
+const APIFeatures = require("../utils/apiFeatures");
 
 exports.getAllAnimals = async (req, res, next) => {
   try {
-    const animals = await Animal.find().sort({ dateOfPurchase: -1 });
+    if (!req.query.sort) {
+      req.query.sort = "-dateOfPurchase";
+    }
+    const features = new APIFeatures(Animal.find(), req.query)
+      .filter()
+      .sort()
+      .limitFields()
+      .paginate();
+    const animals = await features.query;
     res.status(200).json({
       status: "success",
       data: {

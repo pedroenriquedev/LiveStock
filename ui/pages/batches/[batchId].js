@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 import { api, handleError } from "../../utils/axios";
+import GoBackButton from "../../components/GoBackButton";
 
 export default function BatchDetails() {
   const router = useRouter();
@@ -22,8 +23,8 @@ export default function BatchDetails() {
 
   return (
     <div>
-      Batch ID: {batchId}{" "}
-      <button onClick={() => router.back()}> go back </button>
+      <GoBackButton router={router} />
+      <div>Batch ID: {batchId}</div>
     </div>
   );
 }

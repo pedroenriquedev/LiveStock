@@ -1,0 +1,37 @@
+.details {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    row-gap: 3rem;
+    column-gap: 2rem;
+    font-size: 1.3rem;
+    margin-top: 2rem;
+}
+
+
+.details span {
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.details div:last-of-type {
+    grid-column: 1 / 4;
+}
+
+
+.specialField {
+    display: flex;
+    align-items: center;
+}
+
+.details span a {
+    margin-left: 1rem;
+    font-weight: bold;
+    color: inherit;
+    background: rgb(255, 226, 80);
+    border-radius: 4px;
+    display: block;
+    width: max-content;
+    padding: .3rem .7rem;
+}
+
+

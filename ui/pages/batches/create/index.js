@@ -90,15 +90,18 @@ const CreateNewBatch = () => {
         // make button unclickable instead and gray
         throw new Error("Must have at least one animal");
       const animalsIds = [];
-
       setIsFinalizingBatch(true);
 
-      animals.forEach(async (animal) => {
-        // animals are created
-        animal.dateOfPurchase = date;
-        const res = await api.post(`/api/v1/animal`, animal);
+      for (const index in animals) {
+        animals[index].dateOfPurchase = date;
+        const res = await api.post(`/api/v1/animal`, animals[index]);
         animalsIds.push(res.data.newDoc._id);
-      });
+      }
+
+      // animals.forEach(async (animal) => {
+      //   // animals are created
+
+      // });
 
       const newBatch = {
         date,
@@ -111,6 +114,8 @@ const CreateNewBatch = () => {
       const batch = await api.patch(`/api/v1/batch/${id}`, {
         cattle: animalsIds,
       });
+      // redo all this logic in the back end, user should not be responsible to update batch with animals.
+      // user should simply create a new batch passing new animals data into it
       console.log(batch.data.data);
       resetUI();
     } catch (error) {

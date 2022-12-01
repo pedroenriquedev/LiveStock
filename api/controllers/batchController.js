@@ -87,12 +87,20 @@ exports.calculateBatchTotalPrice = async (req, res, next) => {
     const batch = await Batch.findById(req.doc._id).populate("cattle");
     if (req.doc.cattle.length > 0) {
       let total = 0;
-      batch.cattle.forEach(async (animal) => {
-        // add reference to animal document
-        await Animal.findByIdAndUpdate(animal.id, { batch: batch._id });
-        total += animal.initialPrice;
-      });
 
+      for (const animal of batch.cattle) {
+        await Animal.findByIdAndUpdate(animal.id, {
+          batch: batch._id,
+        });
+        total += animal.initialPrice;
+      }
+
+      // batch.cattle.forEach(async (animal) => {
+      //   // add reference to animal document
+      //   await Animal.findByIdAndUpdate(animal.id, { batch: batch._id });
+      //   total += animal.initialPrice;
+      // });
+      console.log(total);
       batch.total = total;
       await batch.save();
     } else {

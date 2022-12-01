@@ -86,6 +86,7 @@ animalSchema.pre("save", function (next) {
   }
   const actualWeight = this.initialWeight / 2;
   this.initialPrice = this.priceRatio * (actualWeight / 15);
+  this.currentWeight = this.initialWeight;
   next();
 });
 

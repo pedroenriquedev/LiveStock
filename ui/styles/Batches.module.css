@@ -1,11 +1,20 @@
 .batch {
     width: 100%;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    border: 1px solid rgba(0, 0, 0, 0.171);
+    grid-template-columns: 1fr 1fr 2fr max-content;
     border-radius: 4px;
     margin: 2rem 0;
     padding: .5rem 2rem;
+    font-size: 1.3rem;
+    align-items: center;
+}
+
+.batch div:not(:first-of-type) {
+    text-align: center;
+}
+
+.batch div:last-of-type {
+    justify-self: end;
 }
 
 .batch:hover {
@@ -14,6 +23,29 @@
 }
 
 .batch h3 {
-    font-size: 1.5rem;
+    font-weight: 400;
+    font-size: inherit;
     color: rgba(0, 0, 0, 0.334);
+}
+
+.link {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: inherit;
+    background: rgb(255, 226, 80);
+    border-radius: 4px;
+    display: block;
+    width: max-content;
+    padding: .3rem .8rem;
+    cursor: pointer;
+    
+}
+
+.link:visited {
+    color: inherit;
+}
+
+.link:hover {
+    background: rgb(253, 232, 125);
+    color: rgb(57, 57, 57);
 }

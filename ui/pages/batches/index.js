@@ -10,7 +10,6 @@ export default function Batches() {
     try {
       const res = await api.get("/api/v1/batch");
       setBatches(res.data.data.data);
-      console.log(batches);
     } catch (error) {
       handleError(error);
     }
@@ -47,7 +46,9 @@ export default function Batches() {
                 <span>{batch.cattle.length}</span>
               </div>
               <div>
-                <Link href={`/batches/${batch._id}`}>Details</Link>
+                <Link href={`/batches/${batch._id}`} passHref>
+                  <a className={styles.link}>Details</a>
+                </Link>
               </div>
             </div>
           ))}

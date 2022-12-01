@@ -1,0 +1,61 @@
+.animal {
+    margin: 2rem 0;
+    display: flex;
+    justify-content: space-between;
+    
+    padding: .5rem 2rem;
+}
+
+.animal:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.animal a {
+    display: block;
+    text-align: right;
+}
+
+.animalDetails {
+    display: flex;
+    justify-content: space-around;
+    flex-grow: 3;
+    font-size: 1.2rem;
+}
+
+.animalDetails div span {
+    color: rgba(0, 0, 0, 0.3);
+    text-transform: uppercase;
+    margin-bottom: .5rem;
+}
+
+.animalDetails div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.animalDetails div:not(:first-of-type) {
+    text-align: center;
+}
+
+.detailsLink {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: inherit;
+    background: rgb(255, 226, 80);
+    border-radius: 4px;
+    display: block;
+    width: max-content;
+    padding: .3rem .8rem;
+    justify-self: center;
+    align-self: center;
+}
+
+.detailsLink:visited {
+    color: inherit;
+}
+
+.detailsLink:hover {
+    background: rgb(253, 232, 125);
+    color: rgb(57, 57, 57);
+}
