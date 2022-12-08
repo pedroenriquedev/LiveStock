@@ -1,0 +1,52 @@
+.details {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    row-gap: 2rem;
+    margin-top: 2rem;
+}
+
+.details div span {
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.details div:nth-of-type(3), .details div:nth-of-type(4) {
+    text-align: center;
+}
+
+.main {
+    font-size: 1.3rem;
+}
+
+.animals h3 {
+    text-transform: capitalize;
+}
+
+.animals > div {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr) max-content;
+    margin: 1.5rem 0;
+}
+
+.animals > div div:last-of-type {
+    align-self: center;
+}
+
+.animals > div div:last-of-type a {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: inherit;
+    background: rgb(255, 226, 80);
+    border-radius: 4px;
+    display: block;
+    width: max-content;
+    padding: .3rem .8rem;
+    justify-self: center;
+    align-self: center;
+    text-transform: capitalize;
+}
+
+.animals > div div span {
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.263);
+}

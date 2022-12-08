@@ -8,7 +8,9 @@ import { api, handleError } from "../../../utils/axios";
 
 const CreateNewBatch = () => {
   const today = new Date(Date.now()).toLocaleDateString().split("/");
-  const todayString = `${today[2]}-${today[0]}-${today[1]}`;
+  const todayString = `${today[2]}-${today[0]}-${
+    parseInt(today[1]) < 10 ? `0${today[1]}` : today[1]
+  }`;
 
   const [isModalOpen, setModalOpen] = useState(false);
   const [rate, setRate] = useState(249);

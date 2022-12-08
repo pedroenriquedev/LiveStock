@@ -1,5 +1,6 @@
 const Batch = require("../models/batchModel");
 const Animal = require("../models/animalModel");
+const APIFeatures = require("../utils/apiFeatures");
 
 exports.createBatch = async (req, res, next) => {
   try {
@@ -14,7 +15,15 @@ exports.createBatch = async (req, res, next) => {
 
 exports.getAllBatches = async (req, res, next) => {
   try {
-    const batches = await Batch.find();
+    if (!req.query.sort) {
+      req.query.sort = "-date";
+    }
+    const features = new APIFeatures(Batch.find(), req.query)
+      .filter()
+      .sort()
+      .limitFields()
+      .paginate();
+    const batches = await features.query;
     res.status(200).json({
       status: "success",
       data: {

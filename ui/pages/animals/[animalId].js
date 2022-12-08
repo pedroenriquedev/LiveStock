@@ -25,6 +25,7 @@ export default function AnimalDetails() {
   useEffect(() => {
     if (!router.isReady) return;
     getBatch();
+    console.log(animal);
   }, [router.isReady]);
 
   return (

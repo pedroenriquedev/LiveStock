@@ -17,14 +17,19 @@ status: 'occupied', 'vacant', 'recovering'
 
 */
 const pastureSchema = new Schema({
-  name: String,
+  name: {
+    type: String,
+    required: true,
+  },
   condition: {
     type: String,
     enum: ["poor", "good", "satisfactory"],
+    default: "good",
   },
   status: {
     type: String,
     enum: ["occupied", "vacant", "recovering"],
+    default: "vacant",
   },
   herd: [
     {
@@ -35,6 +40,7 @@ const pastureSchema = new Schema({
   area: {
     type: Number,
     min: [1, `Pasture area can't be less than 1`],
+    default: 5,
   },
 });
 

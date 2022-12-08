@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { api, handleError } from "../../utils/axios";
 import styles from "../../styles/Batches.module.css";
 import Link from "next/link";
+import { formatePrice } from "../../utils/format";
 
 export default function Batches() {
   const [batches, setBatches] = useState([]);
@@ -39,6 +40,11 @@ export default function Batches() {
               <div>
                 <h3>vendor</h3>
                 <span>{batch.seller}</span>
+              </div>
+
+              <div>
+                <h3>total</h3>
+                {`R$${formatePrice(batch.total)}` || "-"}
               </div>
 
               <div>

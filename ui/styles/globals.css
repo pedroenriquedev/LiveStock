@@ -38,6 +38,7 @@ ul {
     padding-left: 4rem;
     /* background-color: red; */
     overflow-y: auto;
+    font-size: 1.3rem;
 }
 
 a {
