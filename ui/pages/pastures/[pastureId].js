@@ -8,6 +8,7 @@ export default function BatchDetails() {
   const router = useRouter();
   const { pastureId } = router.query;
   const [pasture, setPasture] = useState("");
+  const [toBeChangedArray, SetToBeChangedArray] = useState([]);
 
   const getPasture = async () => {
     try {
@@ -23,6 +24,26 @@ export default function BatchDetails() {
     getPasture();
     console.log(pasture);
   }, [router.isReady]);
+
+  const handleCheckbox = (e) => {
+    const animalId = e.target.value;
+    const newArr = [...toBeChangedArray];
+    if (e.target.checked) {
+      //console.log("add animal to change list");
+      newArr.push(animalId);
+      SetToBeChangedArray(newArr);
+      return;
+    }
+    //console.log("remove animal from change list");
+    const res = newArr.filter((id) => id !== animalId);
+    SetToBeChangedArray(res);
+  };
+
+  // make request to update pasture with animals in the body request
+  // in the back end, must update current and chosen pasture
+  // option to select all animals
+
+  console.log(toBeChangedArray);
 
   return (
     <div>
@@ -66,7 +87,13 @@ export default function BatchDetails() {
               <span>growth</span>
             </div>
             {pasture.herd.map((animal) => (
-              <div key={animal._id}>
+              <label htmlFor={animal._id} key={animal._id}>
+                <input
+                  type="checkbox"
+                  value={animal._id}
+                  onChange={handleCheckbox}
+                  id={animal._id}
+                />
                 <p>{animal.name || "-"}</p>
                 <p>{animal.color}</p>
                 <p>{animal.breed}</p>
@@ -76,7 +103,7 @@ export default function BatchDetails() {
                 <Link href={`/animals/${animal._id}`}>
                   <a>Details</a>
                 </Link>
-              </div>
+              </label>
             ))}
           </div>
         </div>
