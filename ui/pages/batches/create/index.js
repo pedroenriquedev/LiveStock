@@ -22,10 +22,10 @@ const CreateNewBatch = () => {
 
   const DUMMY = [
     {
-      name: "boi cara preta",
+      name: "Boi de Teste 01",
       breed: "Gelbvieh",
       birthdate: "4/4/2019",
-      initialWeight: 140,
+      initialWeight: 165,
       // date of purchase and price ratio could be hidden since it's a batch
       health: "healthy",
       description: "",
@@ -33,10 +33,10 @@ const CreateNewBatch = () => {
       color: "malhado",
     },
     {
-      name: "b",
+      name: "Boi de Teste 02",
       breed: "Belgian Blue",
       birthdate: null,
-      initialWeight: 137,
+      initialWeight: 130,
       health: "healthy",
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui offic ia deserunt mollit anim id est laborum.",
@@ -44,10 +44,10 @@ const CreateNewBatch = () => {
       color: "cinza",
     },
     {
-      name: null,
-      breed: "Brangus",
+      name: "Boi de Teste 03",
+      breed: "Nelore",
       birthdate: "5/4/2020",
-      initialWeight: 152,
+      initialWeight: 143,
       health: "poor",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       priceRatio: 249,

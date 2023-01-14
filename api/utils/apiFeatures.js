@@ -9,6 +9,39 @@ class APIFeatures {
     const excludedFields = ["page", "sort", "limit", "fields"];
     excludedFields.forEach((el) => delete queryObj[el]);
 
+    if (queryObj.pasture === "null") {
+      queryObj.pasture = null;
+    }
+
+    if (queryObj.batch === "null") {
+      queryObj.batch = null;
+    }
+
+    if (queryObj.inclusive === "true") {
+      // const animals = await Animal.find({
+      //   $or: [
+      //     { pasture: ["6307f1f91874ad876d397238","639674cd5276f7bc74501798"] },
+      //     { batch: "6374694823e2575cf77a8d48" },
+      //    ],
+      // });
+      const queryArray = [];
+
+      const arr = Object.entries(queryObj);
+      for (const pair of arr) {
+        if (pair[0] === "inclusive") {
+          break;
+        }
+        const field = pair[0];
+        const value = pair[1];
+        queryArray.push({ [field]: value });
+      }
+
+      this.query = this.query.find({
+        $or: queryArray,
+      });
+      return this;
+    }
+
     // 1B) Advanced filtering
     let queryStr = JSON.stringify(queryObj);
     queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
@@ -42,7 +75,7 @@ class APIFeatures {
 
   paginate() {
     const page = this.queryString.page * 1 || 1;
-    const limit = this.queryString.limit * 1 || 100;
+    const limit = this.queryString.limit * 1 || 500;
     const skip = (page - 1) * limit;
 
     this.query = this.query.skip(skip).limit(limit);

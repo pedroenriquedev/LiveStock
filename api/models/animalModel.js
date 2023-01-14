@@ -78,6 +78,10 @@ const animalSchema = new Schema({
     type: mongoose.Schema.ObjectId,
     ref: "Batch",
   },
+  pasture: {
+    type: mongoose.Schema.ObjectId,
+    ref: "Pasture",
+  },
 });
 
 animalSchema.pre("save", function (next) {

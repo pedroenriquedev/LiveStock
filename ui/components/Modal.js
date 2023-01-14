@@ -33,11 +33,13 @@ const Modal = (props) => {
   }, [props.visible]);
 
   return (
-    <div ref={modalRef} className={styles.container}>
-      <button className={styles.button} onClick={props.cancel}>
-        <FontAwesomeIcon icon={faClose} />
-      </button>
-      {props.children}
+    <div className={styles.backdrop}>
+      <div ref={modalRef} className={styles.container}>
+        <button className={styles.button} onClick={props.cancel}>
+          <FontAwesomeIcon icon={faClose} />
+        </button>
+        {props.children}
+      </div>
     </div>
   );
 };

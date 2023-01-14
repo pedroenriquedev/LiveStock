@@ -1,4 +1,6 @@
 const Pasture = require("../models/pastureModel");
+const Animal = require("../models/animalModel");
+const APIFeatures = require("../utils/apiFeatures");
 
 exports.createPasture = async (req, res, next) => {
   try {
@@ -15,12 +17,18 @@ exports.createPasture = async (req, res, next) => {
 
 exports.getAllPastures = async (req, res, next) => {
   try {
-    const batches = await Pasture.find();
+    const features = new APIFeatures(Pasture.find(), req.query)
+      .filter()
+      .sort()
+      .limitFields()
+      .paginate();
+    const pastures = await features.query;
+
     res.status(200).json({
       status: "success",
       data: {
-        results: batches.length,
-        data: batches,
+        results: pastures.length,
+        data: pastures,
       },
     });
   } catch (error) {
@@ -74,6 +82,127 @@ exports.deletePasture = async (req, res, next) => {
     res.status(204).json({
       status: "success",
       message: "Pasture was deleted.",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.removeAnimalsFromPasture = async (req, res, next) => {
+  try {
+    const doc = await Pasture.findById(req.params.id);
+    const animals = req.body.animals;
+
+    if (!doc) throw new Error("No pasture found with this id.");
+
+    // req.body must contain an animal
+    if (!animals || animals.length < 1)
+      throw new Error("No animals found to be removed.");
+
+    const str = animals.join(" ");
+    const herd = doc.herd.filter((id) => !str.includes(id.toString()));
+
+    doc.herd = herd;
+
+    // remove pasture reference from animals
+    for (const animalId of animals) {
+      console.log(animalId);
+      await Animal.findByIdAndUpdate(animalId, {
+        pasture: null,
+      });
+    }
+
+    await doc.save();
+
+    res.status(200).json({
+      status: "success",
+      data: doc,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.moveAnimalsToAnotherPasture = async (req, res, next) => {
+  try {
+    const { firstId, secondId } = req.params;
+    const animals = req.body.animals;
+
+    const doc1 = await Pasture.findById(firstId);
+    const doc2 = await Pasture.findById(secondId);
+    // console.log(doc1.herd);
+    // console.log(doc2.herd);
+    // console.log("proccessing...");
+
+    if (!doc1 || !doc2)
+      throw new Error("No pasture found with one or both ids provided.");
+
+    // req.body must contain an animal
+    if (!animals || animals.length < 1)
+      throw new Error("No animals found to be moved.");
+
+    // remove animals from pasture 1
+    const str = animals.join(" ");
+    const herd = doc1.herd.filter((id) => !str.includes(id.toString()));
+
+    doc1.herd = herd;
+
+    // move animals to pasture 2 (update pasture 2)
+    for (const animalId of animals) {
+      doc2.herd.push(animalId);
+    }
+
+    // update animals with pasture 2 reference
+    for (const animalId of animals) {
+      console.log(animalId);
+      await Animal.findByIdAndUpdate(animalId, {
+        pasture: doc2._id,
+      });
+    }
+
+    await doc1.save();
+    await doc2.save();
+
+    res.status(200).json({
+      status: "success",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.addAnimalsToPasture = async (req, res, next) => {
+  try {
+    const doc = await Pasture.findById(req.params.id);
+    const animals = req.body.animals;
+
+    if (!doc) throw new Error("No pasture found with this id.");
+
+    // req.body must contain an animal
+    if (!animals || animals.length < 1)
+      throw new Error("No animals found to be added.");
+
+    // what if animal is already ref on another pasture?
+    // this job could be done in the front end to prevent this behavior
+    // if not, if animal.pasture, find and update pasture removing this animal
+
+    for (const animalId of animals) {
+      doc.herd.push(animalId);
+    }
+
+    await doc.save();
+
+    // update animals with pasture reference
+    for (const animalId of animals) {
+      console.log(animalId);
+      await Animal.findByIdAndUpdate(animalId, {
+        pasture: doc._id,
+      });
+    }
+
+    res.status(200).json({
+      status: "success",
+      pasture: doc,
     });
   } catch (error) {
     next(error);

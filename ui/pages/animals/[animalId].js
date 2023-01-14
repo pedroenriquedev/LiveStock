@@ -13,7 +13,7 @@ export default function AnimalDetails() {
   const { animalId } = router.query;
   const [animal, setAnimal] = useState("");
 
-  const getBatch = async () => {
+  const getAnimal = async () => {
     try {
       const res = await api.get(`/api/v1/animal/${animalId}`);
       setAnimal(res.data.data.data);
@@ -24,9 +24,11 @@ export default function AnimalDetails() {
 
   useEffect(() => {
     if (!router.isReady) return;
-    getBatch();
+    getAnimal();
     console.log(animal);
   }, [router.isReady]);
+
+  console.log(animal.weightLog);
 
   return (
     <div>
@@ -83,8 +85,17 @@ export default function AnimalDetails() {
         </div>
 
         <div>
-          <span>pasture</span>
-          <p>not implemented</p>
+          <span className={styles.specialField}>
+            pasture
+            {animal.pasture && (
+              <Link href={`/pastures/${animal.pasture}`} passHref>
+                <a>
+                  <FontAwesomeIcon icon={faArrowRight} />
+                </a>
+              </Link>
+            )}
+          </span>
+          <p>{animal.pasture || "N/A"}</p>
         </div>
 
         <div>

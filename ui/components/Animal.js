@@ -3,10 +3,22 @@ import React from "react";
 import styles from "../styles/Animal.module.css";
 import { formatDate, formateGrowth } from "../utils/format";
 
-const Animal = ({ animal }) => {
+const Animal = ({ animal, showCheckbox, manageToBeChangedArr }) => {
+  const handleCheckbox = (e) => {
+    manageToBeChangedArr(animal._id, e.target.checked);
+  };
   return (
     <>
-      <div className={styles.animal}>
+      <label className={styles.animal} htmlFor={animal._id}>
+        {showCheckbox && (
+          <input
+            type="checkbox"
+            value={animal._id}
+            id={animal._id}
+            onChange={handleCheckbox}
+          ></input>
+        )}
+
         <div className={styles.animalDetails}>
           <div>
             <span>{animal._id}</span>
@@ -37,7 +49,7 @@ const Animal = ({ animal }) => {
         <Link href={`animals/${animal._id}`} passHref>
           <a className={styles.detailsLink}>Details</a>
         </Link>
-      </div>
+      </label>
     </>
   );
 };

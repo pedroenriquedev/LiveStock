@@ -6,12 +6,19 @@ exports.getAllAnimals = async (req, res, next) => {
     if (!req.query.sort) {
       req.query.sort = "-dateOfPurchase";
     }
+
     const features = new APIFeatures(Animal.find(), req.query)
       .filter()
       .sort()
       .limitFields()
       .paginate();
     const animals = await features.query;
+    // const animals = await Animal.find({
+    //   $or: [
+    //     { pasture: ["6307f1f91874ad876d397238", "639674cd5276f7bc74501798"] },
+    //     { batch: "6374694823e2575cf77a8d48" },
+    //   ],
+    // });
     res.status(200).json({
       status: "success",
       data: {
@@ -26,8 +33,7 @@ exports.getAllAnimals = async (req, res, next) => {
 
 exports.createAnimal = async (req, res, next) => {
   try {
-    const { dateOfPurchase } = req.body;
-
+    req.body.pasture = null;
     const newDoc = await Animal.create(req.body);
 
     res.status(201).json({
@@ -45,6 +51,8 @@ exports.getOneAnimal = async (req, res, next) => {
     const doc = await Animal.findById(req.params.id);
 
     if (!doc) throw new Error("No document found with this id.");
+
+    console.log(doc.pasture);
 
     res.status(200).json({
       status: "success",

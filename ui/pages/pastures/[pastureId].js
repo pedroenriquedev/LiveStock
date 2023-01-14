@@ -3,12 +3,24 @@ import { useRouter } from "next/router";
 import { api, handleError } from "../../utils/axios";
 import GoBackButton from "../../components/GoBackButton";
 import Link from "next/link";
+import styles from "../../styles/PastureDetails.module.css";
+import Modal from "../../components/Modal";
+import MoveAnimals from "../../components/MoveAnimals";
 
 export default function BatchDetails() {
   const router = useRouter();
   const { pastureId } = router.query;
   const [pasture, setPasture] = useState("");
-  const [toBeChangedArray, SetToBeChangedArray] = useState([]);
+  const [toBeChangedArray, setToBeChangedArray] = useState([]);
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  const handleOpenModal = () => {
+    setModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+  };
 
   const getPasture = async () => {
     try {
@@ -31,26 +43,40 @@ export default function BatchDetails() {
     if (e.target.checked) {
       //console.log("add animal to change list");
       newArr.push(animalId);
-      SetToBeChangedArray(newArr);
+      setToBeChangedArray(newArr);
       return;
     }
     //console.log("remove animal from change list");
     const res = newArr.filter((id) => id !== animalId);
-    SetToBeChangedArray(res);
+    setToBeChangedArray(res);
   };
 
-  // make request to update pasture with animals in the body request
-  // in the back end, must update current and chosen pasture
-  // option to select all animals
+  const handleRemoveAnimals = async (e) => {
+    if (toBeChangedArray.length < 1) return;
 
-  console.log(toBeChangedArray);
+    const res = await api.patch(`/api/v1/pasture/removeanimals/${pastureId}`, {
+      animals: toBeChangedArray,
+    });
+
+    console.log(res.data);
+
+    router.reload();
+  };
+
+  const handleMoveAnimals = async () => {
+    if (toBeChangedArray.length < 1) return;
+
+    handleOpenModal();
+
+    return;
+  };
 
   return (
     <div>
       <GoBackButton router={router} />
       {pasture.herd && (
         <div>
-          <div>
+          <div className={styles.details}>
             <div>
               <span>name</span>
               <p>{pasture.name}</p>
@@ -78,6 +104,7 @@ export default function BatchDetails() {
           </div>
 
           <div>
+            <h3>Herd</h3>
             <div>
               <span>name</span>
               <span>color</span>
@@ -87,7 +114,11 @@ export default function BatchDetails() {
               <span>growth</span>
             </div>
             {pasture.herd.map((animal) => (
-              <label htmlFor={animal._id} key={animal._id}>
+              <label
+                htmlFor={animal._id}
+                key={animal._id}
+                className={styles.label}
+              >
                 <input
                   type="checkbox"
                   value={animal._id}
@@ -105,6 +136,21 @@ export default function BatchDetails() {
                 </Link>
               </label>
             ))}
+          </div>
+
+          <div>
+            {/* remove from, move from this to another, add animals */}
+            {/* only update this pasture with animals + update animals reference to pasture:null */}
+            <button onClick={handleRemoveAnimals}>Remove</button>
+            {/* only update this pasture with animals + update animals reference to pasture + update other pasture */}
+            <button onClick={handleMoveAnimals}>Move</button>
+            {/* two different requests, add animals to this pastures for animals not referenced with a pasture, and movetopasture for animals already on a pasture update this pasture with animals + update animals reference to pasture, could be a link to animals page to make things simplier, then default pasture on page load */}
+            <Link href={`/animals/`}>Add</Link>
+            {isModalOpen && (
+              <Modal visible={handleOpenModal} cancel={handleCloseModal}>
+                <MoveAnimals animals={toBeChangedArray} pasture={pasture} />
+              </Modal>
+            )}
           </div>
         </div>
       )}

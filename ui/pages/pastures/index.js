@@ -18,7 +18,6 @@ export default function Pasture() {
 
   useEffect(() => {
     getPastures();
-    console.log(pastures);
   }, []);
 
   return (
