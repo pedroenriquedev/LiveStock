@@ -7,11 +7,24 @@ import styles from "../../styles/AnimalDetails.module.css";
 import { formatDate, formateGrowth, formatePrice } from "../../utils/format";
 import Link from "next/link";
 import GoBackButton from "../../components/GoBackButton";
+import Modal from "../../components/Modal";
+import AddWeightLog from "../../components/AddWeightLog";
+import LineChart from "../../components/LineChart";
+import Button from "../../components/Button";
 
 export default function AnimalDetails() {
   const router = useRouter();
   const { animalId } = router.query;
   const [animal, setAnimal] = useState("");
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  const handleOpenModal = () => {
+    setModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+  };
 
   const getAnimal = async () => {
     try {
@@ -25,10 +38,7 @@ export default function AnimalDetails() {
   useEffect(() => {
     if (!router.isReady) return;
     getAnimal();
-    console.log(animal);
   }, [router.isReady]);
-
-  console.log(animal.weightLog);
 
   return (
     <div>
@@ -118,7 +128,30 @@ export default function AnimalDetails() {
         </div>
       </div>
 
-      <div>WEIGHT LOG</div>
+      {animal.weightLog && <LineChart weightLog={animal.weightLog} />}
+
+      <div className={styles.action}>
+        <Button onClick={handleOpenModal}>Add Weight Log</Button>
+      </div>
+
+      {isModalOpen && (
+        <Modal visible={handleOpenModal} cancel={handleCloseModal}>
+          <AddWeightLog animal={animal} fireCloseModal={handleCloseModal} />
+        </Modal>
+      )}
+      <div className={styles.weightLogContainer}>
+        {animal.weightLog &&
+          animal.weightLog
+            .slice(0)
+            .reverse()
+            .map((log) => (
+              <div key={log._id}>
+                <h4>{`Date: ${formatDate(log.date)}`}</h4>
+                <p>{`Weight: ${log.weight}`}</p>
+                <p>{`Growth: ${formateGrowth(log.growthRatio)}`}</p>
+              </div>
+            ))}
+      </div>
     </div>
   );
 }

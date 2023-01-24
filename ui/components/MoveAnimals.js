@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { api, handleError } from "../utils/axios";
 import { useRouter } from "next/router";
+import styles from "../styles/MoveAnimals.module.css";
+import Button from "./Button";
 
 const MoveAnimals = (props) => {
   const { animals, pasture } = props;
@@ -72,10 +74,10 @@ const MoveAnimals = (props) => {
   }, [router.isReady]);
 
   return (
-    <div>
+    <div className={styles.container}>
       move {animals.length} animal(s)
       {/* render options -> pastures, except pasture already in */}
-      {pasture && <p>from {pasture.name} to</p>}
+      {pasture && <p>from {pasture.name} to:</p>}
       <select name="pastures" onChange={handleChange} defaultValue={"default"}>
         <option disabled value="default">
           select an option
@@ -86,7 +88,7 @@ const MoveAnimals = (props) => {
           </option>
         ))}
       </select>
-      <button onClick={handleMoveButton}>Move</button>
+      <Button onClick={handleMoveButton}>Move</Button>
     </div>
   );
 };

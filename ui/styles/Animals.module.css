@@ -1,0 +1,68 @@
+.animals {
+    max-height: 45vh;
+    overflow-y: auto;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.053);
+    border-top: 1px solid rgba(0, 0, 0, 0.053);
+    margin-top: 1rem;
+}
+
+
+
+.animals label {
+    border-radius: 4px;
+}
+
+.filtersContainer button {
+   font-size: 1rem;
+   margin: 1rem auto;
+   display: block;
+}
+
+.filtersContainer div {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: min-content repeat(4, min-content);
+}
+
+.filtersContainer div h4 {
+    grid-column: 1 / 4;
+}
+
+.filtersContainer div label {
+    margin-right: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: max-content;
+}
+
+.filtersContainer div label input {
+    margin-right: .5rem;
+}
+
+.sortButton {
+    font: inherit;
+    font-size: 1.1rem;
+    font-weight: bold;
+    padding: .2rem .5rem;
+    background: rgb(48, 48, 48);
+    border: none;
+    border-radius: 3px;
+    color: white;
+    cursor: pointer;
+    margin-right: .5rem;
+}
+
+.sortButton svg {
+    margin-right: .4rem;
+}
+
+.actions {
+    display: flex;
+    height: 3rem;
+    margin: 1rem 0;
+}
+
+.actions button:first-of-type {
+    margin-right: 2rem;
+}

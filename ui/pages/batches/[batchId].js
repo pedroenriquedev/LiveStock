@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { api, handleError } from "../../utils/axios";
 import GoBackButton from "../../components/GoBackButton";
-import { formatDate, formatePrice } from "../../utils/format";
+import { formatDate, formateGrowth, formatePrice } from "../../utils/format";
 import styles from "../../styles/BatchDetails.module.css";
 import Link from "next/link";
 
@@ -13,7 +13,7 @@ export default function BatchDetails() {
 
   const getBatch = async () => {
     try {
-      const res = await api.get(`/api/v1/batch/${batchId}`);
+      const res = await api.get(`/api/v1/batch/id/${batchId}`);
       setBatch(res.data.data.data);
     } catch (error) {
       handleError(error);
@@ -24,8 +24,6 @@ export default function BatchDetails() {
     if (!router.isReady) return;
     getBatch();
   }, [router.isReady]);
-
-  console.log(batch);
 
   return (
     <div>
@@ -85,7 +83,7 @@ export default function BatchDetails() {
 
                 <div>
                   <span>growth</span>
-                  <p>{animal.growthRatio || "-"}</p>
+                  <p>{formateGrowth(animal.growthRatio) || "-"}</p>
                 </div>
 
                 <div>

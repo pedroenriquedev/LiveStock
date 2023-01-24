@@ -11,7 +11,73 @@
 }
 
 .label {
+    margin: 1rem 0;
+    position: relative;
+    padding: 1.5rem 2rem;
+    border-radius: 4px;
+}
+
+.label p {
+    text-transform: capitalize;
+}
+
+.label p:nth-of-type(5), .label p:nth-of-type(6),
+.animalLabels span:nth-of-type(5), .animalLabels span:nth-of-type(6) {
+    justify-self: center;
+}
+
+.label a {
+    justify-self: end;
+}
+
+.label:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.label, .animalLabels {
+    display: grid;
+    grid-template-columns: 1rem 10rem repeat(6, 1fr);
+    gap: 1.5rem;
+    align-items: center;
+    padding: 1.5rem 2rem;
+}
+
+/* .label input {
+    position: absolute;
+    left: -4%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+} */
+
+.animalsContainer {
+   
+}
+
+
+.animalLabels {
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+
+.animals {
+    overflow-y: auto;
+    height: 50vh;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+}
+
+.animals::-webkit-scrollbar { /* WebKit */
+    width: 0;
+    height: 0;
+}
+
+.actions {
     display: flex;
     justify-content: space-between;
-    margin: 2rem 0;
+    width: 40%;
+    margin-left: auto;
+    margin-top: 2rem;
 }

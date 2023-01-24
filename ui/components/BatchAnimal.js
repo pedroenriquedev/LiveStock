@@ -1,17 +1,10 @@
 import React from "react";
 import styles from "../styles/BatchAnimal.module.css";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faTrash, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { formatePrice } from "../utils/format";
 const BatchAnimal = (props) => {
-  const {
-    name,
-    breed,
-    birthdate,
-    initialWeight,
-    health,
-    description,
-    priceRatio,
-  } = props.animal;
+  const { name, breed, initialWeight, priceRatio } = props.animal;
 
   const { handleDeleteAnimal, index } = props;
 
@@ -34,10 +27,10 @@ const BatchAnimal = (props) => {
 
       <span>{initialWeight}</span>
 
-      <span>{getAnimalPrice(initialWeight)}</span>
+      <span>{formatePrice(getAnimalPrice(initialWeight))}</span>
 
       <button className={styles.button} onClick={deleteAnimal}>
-        <FontAwesomeIcon icon={faTrash} />
+        <FontAwesomeIcon icon={faTrashCan} />
       </button>
     </div>
   );

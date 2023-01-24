@@ -1,0 +1,11 @@
+.form input, .form select{
+    display: block;
+}
+
+.form div {
+    margin: 1rem 0;
+}
+
+.form div:last-of-type input {
+    width: 5rem;
+}

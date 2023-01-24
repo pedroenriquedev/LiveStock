@@ -1,0 +1,22 @@
+.link {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: inherit;
+    background: rgb(255, 226, 80);
+    border-radius: 4px;
+    display: block;
+    width: max-content;
+    padding: .3rem .8rem;
+    cursor: pointer;
+    text-transform: capitalize;
+    
+}
+
+.link:visited {
+    color: inherit;
+}
+
+.link:hover {
+    background: rgb(253, 232, 125);
+    color: rgb(57, 57, 57);
+}

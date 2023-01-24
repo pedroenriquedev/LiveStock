@@ -3,6 +3,7 @@ import { api, handleError } from "../../utils/axios";
 import styles from "../../styles/Batches.module.css";
 import Link from "next/link";
 import { formatePrice } from "../../utils/format";
+import CustomLink from "../../components/CustomLink";
 
 export default function Batches() {
   const [batches, setBatches] = useState([]);
@@ -28,6 +29,7 @@ export default function Batches() {
   return (
     <div>
       <h2>Batches</h2>
+      <CustomLink href={`/batches/create`} text={`Create a new batch`} />
       {batches.length > 0 ? (
         <div>
           {batches.map((batch) => (
@@ -52,9 +54,7 @@ export default function Batches() {
                 <span>{batch.cattle.length}</span>
               </div>
               <div>
-                <Link href={`/batches/${batch._id}`} passHref>
-                  <a className={styles.link}>Details</a>
-                </Link>
+                <CustomLink href={`/batches/${batch._id}`} text={`Details`} />
               </div>
             </div>
           ))}

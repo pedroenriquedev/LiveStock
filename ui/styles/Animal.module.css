@@ -6,6 +6,10 @@
     padding: .5rem 2rem;
 }
 
+.animal input {
+    margin-right: 2rem;
+}
+
 .animal:hover {
     background: rgba(0, 0, 0, 0.05);
 }
@@ -16,9 +20,12 @@
 }
 
 .animalDetails {
-    display: flex;
+    /* display: flex;
     justify-content: space-around;
+    flex-grow: 3; */
     flex-grow: 3;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
     font-size: 1.2rem;
 }
 

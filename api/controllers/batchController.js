@@ -109,7 +109,7 @@ exports.calculateBatchTotalPrice = async (req, res, next) => {
       //   await Animal.findByIdAndUpdate(animal.id, { batch: batch._id });
       //   total += animal.initialPrice;
       // });
-      console.log(total);
+
       batch.total = total;
       await batch.save();
     } else {
@@ -121,6 +121,30 @@ exports.calculateBatchTotalPrice = async (req, res, next) => {
       status: "success",
       data: batch,
     });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.createBatchWithAnimals = async (req, res, next) => {
+  try {
+    const { date, animals, seller } = req.body;
+    // create animals
+    for (const index in animals) {
+      animals[index].dateOfPurchase = date;
+    }
+
+    const newAnimals = await Animal.create(animals);
+    const newAnimalsIDS = newAnimals.map((animal) => animal._id.toString());
+
+    // create new batch
+
+    const newBatch = await Batch.create({ date, seller });
+    newBatch.cattle = newAnimalsIDS;
+    await newBatch.save();
+    // use calculateBatchTotalPrice to update animals with batch id
+    req.doc = newBatch;
+    next();
   } catch (error) {
     next(error);
   }

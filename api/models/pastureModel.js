@@ -1,21 +1,6 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-// pasture condition
-// cattle
-/* 
-general growth of herd in the pasture
- - calculated by analyzing each animal in cattle
- - addition of all growth rates / number of animals
-
-status: 'occupied', 'vacant', 'recovering'
-// react: project profit based on general growth and speculated price
-
-- move batch from one pasture to another
-// cant move batch to a pasture that's recovering
--- this all could be done with findByIdAndUpdate doc.cattle = [''] after running a method on the array
-
-*/
 const pastureSchema = new Schema({
   name: {
     type: String,
@@ -29,7 +14,7 @@ const pastureSchema = new Schema({
   status: {
     type: String,
     enum: ["occupied", "vacant", "recovering"],
-    default: "vacant",
+    default: "occupied",
   },
   herd: [
     {

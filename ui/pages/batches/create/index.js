@@ -5,12 +5,13 @@ import NewAnimal from "../../../components/NewAnimal";
 import BatchAnimal from "../../../components/BatchAnimal";
 import styles from "../../../styles/CreateBatch.module.css";
 import { api, handleError } from "../../../utils/axios";
+import { getTodayString } from "../../../utils/getTodayString";
+import GoBackButton from "../../../components/GoBackButton";
+import { useRouter } from "next/router";
+import Button from "../../../components/Button";
 
 const CreateNewBatch = () => {
-  const today = new Date(Date.now()).toLocaleDateString().split("/");
-  const todayString = `${today[2]}-${today[0]}-${
-    parseInt(today[1]) < 10 ? `0${today[1]}` : today[1]
-  }`;
+  const todayString = getTodayString();
 
   const [isModalOpen, setModalOpen] = useState(false);
   const [rate, setRate] = useState(249);
@@ -20,12 +21,13 @@ const CreateNewBatch = () => {
   const [seller, setSeller] = useState("");
   const [description, setDescription] = useState("");
 
+  const router = useRouter();
+
   const DUMMY = [
     {
-      name: "Boi de Teste 01",
-      breed: "Gelbvieh",
-      birthdate: "4/4/2019",
-      initialWeight: 165,
+      name: "Boi Teste A",
+      breed: "Nelore",
+      initialWeight: 148,
       // date of purchase and price ratio could be hidden since it's a batch
       health: "healthy",
       description: "",
@@ -33,23 +35,21 @@ const CreateNewBatch = () => {
       color: "malhado",
     },
     {
-      name: "Boi de Teste 02",
-      breed: "Belgian Blue",
+      name: "Boi Teste B",
+      breed: "Mascavo",
       birthdate: null,
       initialWeight: 130,
       health: "healthy",
       description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui offic ia deserunt mollit anim id est laborum.",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
       priceRatio: 249,
       color: "cinza",
     },
     {
-      name: "Boi de Teste 03",
+      name: "Boi Teste C",
       breed: "Nelore",
-      birthdate: "5/4/2020",
-      initialWeight: 143,
+      initialWeight: 140,
       health: "poor",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       priceRatio: 249,
       color: "vermelho",
     },
@@ -86,39 +86,18 @@ const CreateNewBatch = () => {
 
   const handleForm = async (e) => {
     e.preventDefault();
-
     try {
       if (animals.length === 0)
         // make button unclickable instead and gray
         throw new Error("Must have at least one animal");
-      const animalsIds = [];
       setIsFinalizingBatch(true);
 
-      for (const index in animals) {
-        animals[index].dateOfPurchase = date;
-        const res = await api.post(`/api/v1/animal`, animals[index]);
-        animalsIds.push(res.data.newDoc._id);
-      }
-
-      // animals.forEach(async (animal) => {
-      //   // animals are created
-
-      // });
-
-      const newBatch = {
+      const batch = await api.post(`/api/v1/batch/createBatchWithAnimals`, {
         date,
         seller,
-      };
-      // new batch is created
-      const res = await api.post(`/api/v1/batch`, newBatch);
-      const id = res.data.data._id;
-      // batch is updated with animals
-      const batch = await api.patch(`/api/v1/batch/${id}`, {
-        cattle: animalsIds,
+        animals,
       });
-      // redo all this logic in the back end, user should not be responsible to update batch with animals.
-      // user should simply create a new batch passing new animals data into it
-      console.log(batch.data.data);
+
       resetUI();
     } catch (error) {
       handleError(error);
@@ -128,6 +107,7 @@ const CreateNewBatch = () => {
 
   return (
     <div>
+      <GoBackButton router={router} />
       <h2>Batch information</h2>
       <form onSubmit={handleForm}>
         <div className={styles.batchInfo}>
@@ -167,9 +147,10 @@ const CreateNewBatch = () => {
             />
           </div>
         </div>
-        <button className={styles.button} onClick={handleOpenModal}>
-          Add animal
-        </button>
+        <div className={styles.marginTopBottom}>
+          <Button onClick={handleOpenModal}>Add Animal</Button>
+        </div>
+
         <div>
           <h2>Animals</h2>
           <div className={styles.labels}>
@@ -193,15 +174,11 @@ const CreateNewBatch = () => {
             })}
           </div>
         </div>
-        <button
-          className={
-            animals.length > 0
-              ? styles.button
-              : `${styles.button} ${styles.disabled}`
-          }
-        >
-          {isFinalizingBatch ? `. . .` : "Finalize batch"}
-        </button>
+        <div className={styles.marginTopBottom}>
+          <Button color={animals.length > 0 ? "yellow" : "gray"}>
+            {isFinalizingBatch ? `. . .` : "Finalize batch"}
+          </Button>
+        </div>
       </form>
       <div>
         {isModalOpen && (

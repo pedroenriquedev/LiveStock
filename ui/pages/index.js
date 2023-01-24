@@ -2,7 +2,7 @@ import Link from "next/link";
 import { useState } from "react";
 import Modal from "../components/Modal";
 import NewAnimal from "../components/NewAnimal";
-import { api } from "../utils/axios";
+import { api, handleError } from "../utils/axios";
 
 export default function Home() {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -10,12 +10,10 @@ export default function Home() {
   const apiUrl = "127.0.0.1:3000";
 
   const handleNewAnimal = async (animal) => {
-    // console.log(animal);
     try {
       const res = await api.post(`/api/v1/animal`, animal);
-      console.log(res.data);
     } catch (error) {
-      console.log(error);
+      handleError(error);
     }
   };
 

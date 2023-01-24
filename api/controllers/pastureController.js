@@ -106,7 +106,6 @@ exports.removeAnimalsFromPasture = async (req, res, next) => {
 
     // remove pasture reference from animals
     for (const animalId of animals) {
-      console.log(animalId);
       await Animal.findByIdAndUpdate(animalId, {
         pasture: null,
       });
@@ -130,9 +129,6 @@ exports.moveAnimalsToAnotherPasture = async (req, res, next) => {
 
     const doc1 = await Pasture.findById(firstId);
     const doc2 = await Pasture.findById(secondId);
-    // console.log(doc1.herd);
-    // console.log(doc2.herd);
-    // console.log("proccessing...");
 
     if (!doc1 || !doc2)
       throw new Error("No pasture found with one or both ids provided.");
@@ -154,7 +150,6 @@ exports.moveAnimalsToAnotherPasture = async (req, res, next) => {
 
     // update animals with pasture 2 reference
     for (const animalId of animals) {
-      console.log(animalId);
       await Animal.findByIdAndUpdate(animalId, {
         pasture: doc2._id,
       });
@@ -194,7 +189,6 @@ exports.addAnimalsToPasture = async (req, res, next) => {
 
     // update animals with pasture reference
     for (const animalId of animals) {
-      console.log(animalId);
       await Animal.findByIdAndUpdate(animalId, {
         pasture: doc._id,
       });

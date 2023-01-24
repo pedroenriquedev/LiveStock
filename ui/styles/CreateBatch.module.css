@@ -3,11 +3,10 @@
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     justify-items: center;
     padding-bottom: 1rem;
-    border-bottom: 2px solid rgba(0, 0, 0, 0.138);
 }
 
 .labels label {
-    font-size: 1.9rem;
+    font-size: 1.3rem;
     text-transform: capitalize;
     font-weight: 800;
 }
@@ -16,7 +15,8 @@
     min-height: 10rem;
     max-height: 36rem;
     overflow-y: auto;
-    border-bottom: 2px solid rgba(0, 0, 0, 0.138);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.138);
+    border-top: 1px solid rgba(0, 0, 0, 0.138);
 }
 
 .animals div:nth-child(even) {
@@ -65,20 +65,7 @@
     resize: none;
 }
 
-.button {
-    padding: 1rem 2rem;
-    font: inherit;
-    border: none;
-    cursor: pointer;
-    width: 16.69rem;
-    margin: 1.7rem 0;
-    background-image: linear-gradient(to right, #83d919, #8cde17, #95e216, #9fe714, #a8eb12);
-    border-radius: 4px;
-    text-transform: uppercase;
-    font-weight: 800;
-}
 
-.disabled {
-    background: #b8b8b8;
-    pointer-events: none;
+.marginTopBottom {
+    margin: 1rem 0;
 }

@@ -1,0 +1,28 @@
+.pasture {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    margin: 2rem 0;
+    align-items: center;
+    padding: .5rem 2rem;
+    border-radius: 4px;
+}
+
+.pasture:hover {
+    background: rgba(0, 0, 0, 0.171);
+}
+
+.pasture span {
+    text-transform: uppercase;
+    font-weight: 400;
+    font-size: 1.3rem;
+    color: rgba(0, 0, 0, 0.334);
+}
+
+.pasture div:nth-of-type(4),.pasture div:nth-of-type(5) {
+    text-align: center;
+}
+
+.pasture div:nth-of-type(5) {
+    justify-self: right;
+}
+

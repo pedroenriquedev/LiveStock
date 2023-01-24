@@ -1,11 +1,22 @@
 import { useEffect, useState } from "react";
 import { api, handleError } from "../../utils/axios";
-import styles from "../../styles/Batches.module.css";
-import Link from "next/link";
-import { formatePrice } from "../../utils/format";
+import styles from "../../styles/Pastures.module.css";
+import CustomLink from "../../components/CustomLink";
+import Button from "../../components/Button";
+import Modal from "../../components/Modal";
+import NewPasture from "../../components/NewPasture";
 
 export default function Pasture() {
   const [pastures, setPastures] = useState([]);
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  const handleOpenModal = () => {
+    setModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+  };
 
   const getPastures = async () => {
     try {
@@ -23,11 +34,17 @@ export default function Pasture() {
   return (
     <div>
       <h2>Pastures</h2>
-      <button>Add Pasture</button>
+      <Button onClick={handleOpenModal}>Add Pasture</Button>
+      {isModalOpen && (
+        <Modal visible={handleOpenModal} cancel={handleCloseModal}>
+          <NewPasture />
+        </Modal>
+      )}
+
       {pastures.length > 0 ? (
-        <div>
+        <div className={styles.pasturesContainer}>
           {pastures.map((pasture) => (
-            <div key={pasture._id}>
+            <div className={styles.pasture} key={pasture._id}>
               <div>
                 <span>name</span>
                 <p>{pasture.name}</p>
@@ -49,9 +66,10 @@ export default function Pasture() {
               </div>
 
               <div>
-                <Link href={`/pastures/${pasture._id}`} passHref>
-                  <a>details</a>
-                </Link>
+                <CustomLink
+                  href={`/pastures/${pasture._id}`}
+                  text={`Details`}
+                />
               </div>
             </div>
           ))}

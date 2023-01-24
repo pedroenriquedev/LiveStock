@@ -1,0 +1,22 @@
+.container input {
+    display: block;
+}
+
+.container p::first-letter {
+    text-transform: capitalize;
+}
+
+.container label {
+    text-transform: capitalize;
+}
+
+.container  {
+    min-height: 20rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.container button {
+    margin-top: 1rem;
+}

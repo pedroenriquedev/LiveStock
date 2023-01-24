@@ -9,6 +9,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import MoveAnimals from "../../components/MoveAnimals";
 import Modal from "../../components/Modal";
+import styles from "../../styles/Animals.module.css";
+import Button from "../../components/Button";
 
 export default function Home() {
   const [animals, setAnimals] = useState([]);
@@ -157,7 +159,6 @@ export default function Home() {
 
     if (selectedBatches.length < 1 && selectedPastures.length < 1) return;
 
-    console.log("filter applied");
     setToBeChangedArray([]);
 
     const variable = batchesCheckedState.find((el) => el === true);
@@ -209,53 +210,60 @@ export default function Home() {
 
   const handleAddToPasture = () => {
     handleOpenModal();
-    console.log(toBeChangedArray);
   };
 
   return (
     <div>
       <h2>Animals</h2>
       <div>
-        <button>
-          <FontAwesomeIcon icon={faFilter} />
-        </button>
         <h3>Filter by</h3>
-        <h4>Pastures</h4>
-        {pastures.map((pasture, index) => (
-          <label htmlFor={pasture._id} key={pasture._id}>
-            <input
-              id={pasture._id}
-              value={pasture._id}
-              name="pasture"
-              type="checkbox"
-              checked={pastCheckedState[index]}
-              onChange={(e) => {
-                handlePastCheckbox(index, e.target.value);
-              }}
-            />
-            {pasture.name}
-          </label>
-        ))}
+        <div className={styles.filtersContainer}>
+          <div>
+            <h4>Pastures</h4>
+            {pastures.map((pasture, index) => (
+              <label htmlFor={pasture._id} key={pasture._id}>
+                <input
+                  id={pasture._id}
+                  value={pasture._id}
+                  name="pasture"
+                  type="checkbox"
+                  checked={pastCheckedState[index]}
+                  onChange={(e) => {
+                    handlePastCheckbox(index, e.target.value);
+                  }}
+                />
+                {pasture.name}
+              </label>
+            ))}
+          </div>
 
-        <h4>Batches</h4>
-        {batches.map((batch, index) => (
-          <label htmlFor={batch._id} key={batch._id}>
-            <input
-              id={batch._id}
-              value={batch._id}
-              name="batch"
-              type="checkbox"
-              checked={batchesCheckedState[index]}
-              onChange={(e) => handleBatchesCheckbox(index, e.target.value)}
-            />
-            {batch.seller}
-          </label>
-        ))}
-        <button onClick={handleApplyFilter}>Apply</button>
+          <div>
+            <h4>Batches</h4>
+            {batches.map((batch, index) => (
+              <label
+                htmlFor={batch._id === "null" ? "batch_null" : batch._id}
+                key={batch._id}
+              >
+                <input
+                  id={batch._id === "null" ? "batch_null" : batch._id}
+                  value={batch._id}
+                  name="batch"
+                  type="checkbox"
+                  checked={batchesCheckedState[index]}
+                  onChange={(e) => handleBatchesCheckbox(index, e.target.value)}
+                />
+                {batch.seller}
+              </label>
+            ))}
+          </div>
+          <Button onClick={handleApplyFilter}>Apply</Button>
+        </div>
+
         <h3>Sort by</h3>
         {/* // sort by currentWeight, date of purchase, health, growth */}
         {sortOptions.map((option, index) => (
           <button
+            className={styles.sortButton}
             value={option}
             key={index}
             onClick={(e) => {
@@ -273,25 +281,38 @@ export default function Home() {
           </button>
         ))}
       </div>
-      {isEditing && (
-        <div>
-          <button onClick={handleAddToPasture}>Add/Move to pasture</button>
-          <button onClick={() => setIsEditing(false)}>Cancel</button>
-        </div>
-      )}
-      {!isEditing && canAddToPasture && (
-        <div>
-          <button onClick={() => setIsEditing(true)}>Edit</button>
-        </div>
-      )}
-      {animals.map((animal) => (
-        <Animal
-          animal={animal}
-          key={animal._id}
-          showCheckbox={isEditing}
-          manageToBeChangedArr={manageToBeChangedArr}
-        />
-      ))}
+
+      <div className={styles.animals}>
+        {animals.map((animal) => (
+          <Animal
+            animal={animal}
+            key={animal._id}
+            showCheckbox={isEditing}
+            manageToBeChangedArr={manageToBeChangedArr}
+          />
+        ))}
+      </div>
+
+      <div className={styles.actions}>
+        {isEditing && (
+          <div>
+            <Button color="red" onClick={() => setIsEditing(false)}>
+              Cancel
+            </Button>
+            <Button
+              onClick={handleAddToPasture}
+              color={toBeChangedArray.length > 0 ? "yellow" : "gray"}
+            >
+              Move to pasture
+            </Button>
+          </div>
+        )}
+        {!isEditing && canAddToPasture && (
+          <div>
+            <Button onClick={() => setIsEditing(true)}>Edit</Button>
+          </div>
+        )}
+      </div>
 
       {isModalOpen && (
         <Modal visible={handleOpenModal} cancel={handleCloseModal}>

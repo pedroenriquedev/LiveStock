@@ -1,0 +1,21 @@
+.container::first-letter {
+    text-transform: capitalize;
+}
+
+.container button {
+    display: block;
+    margin-top: 1rem;
+}
+
+.container select {
+    margin: 1rem 0;
+    padding: .5rem 1rem;
+    display: block;
+}
+
+.container {
+    min-height: 15rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}

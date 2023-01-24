@@ -34,4 +34,25 @@
     padding: .3rem .7rem;
 }
 
+.weightLogContainer {
+    max-height: 30rem;
+    overflow-y: scroll;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.053);
+    border-top: 1px solid rgba(0, 0, 0, 0.053);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    padding: 1rem;
+}
 
+.weightLogContainer div:nth-child(odd) {
+    background-color: rgba(0, 0, 0, 0.053);
+}
+
+.weightLogContainer div {
+    padding: 1rem;
+}
+
+.action {
+    margin: 1rem 0;
+}

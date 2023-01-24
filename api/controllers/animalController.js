@@ -19,6 +19,7 @@ exports.getAllAnimals = async (req, res, next) => {
     //     { batch: "6374694823e2575cf77a8d48" },
     //   ],
     // });
+
     res.status(200).json({
       status: "success",
       data: {
@@ -35,7 +36,6 @@ exports.createAnimal = async (req, res, next) => {
   try {
     req.body.pasture = null;
     const newDoc = await Animal.create(req.body);
-
     res.status(201).json({
       newDoc,
     });
@@ -52,7 +52,11 @@ exports.getOneAnimal = async (req, res, next) => {
 
     if (!doc) throw new Error("No document found with this id.");
 
-    console.log(doc.pasture);
+    doc.weightLog.sort(function (a, b) {
+      var c = new Date(a.date);
+      var d = new Date(b.date);
+      return c - d;
+    });
 
     res.status(200).json({
       status: "success",
@@ -86,16 +90,15 @@ exports.updateAnimal = async (req, res, next) => {
 };
 
 exports.deleteAnimal = async (req, res, next) => {
-  const doc = await Animal.findByIdAndDelete(req.params.id);
-
-  if (!doc) throw new Error("No document found with this id.");
-
-  res.status(204).json({
-    status: "success",
-    message: "Animal was deleted.",
-  });
-
   try {
+    const doc = await Animal.findByIdAndDelete(req.params.id);
+
+    if (!doc) throw new Error("No document found with this id.");
+
+    res.status(204).json({
+      status: "success",
+      message: "Animal was deleted.",
+    });
   } catch (error) {
     next(error);
   }
@@ -109,9 +112,17 @@ exports.addWeightLog = async (req, res, next) => {
 
     if (!doc) throw new Error("No document found with this id.");
 
-    // ensures only weight and date are pushed instead of req.body
     doc.weightLog.push({ weight, date });
-    doc.currentWeight = weight;
+
+    // update current weight with latest log (date wise, not createdAt wise)
+    doc.weightLog.sort(function (a, b) {
+      var c = new Date(a.date);
+      var d = new Date(b.date);
+      return c - d;
+    });
+
+    // update current weight with latest log (date wise, not createdAt wise)
+    doc.currentWeight = doc.weightLog.at(-1).weight;
     await doc.save();
 
     res.status(200).json({

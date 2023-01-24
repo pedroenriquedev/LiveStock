@@ -86,8 +86,9 @@ const animalSchema = new Schema({
 
 animalSchema.pre("save", function (next) {
   if (!this.isNew) {
-    next();
+    return next();
   }
+
   const actualWeight = this.initialWeight / 2;
   this.initialPrice = this.priceRatio * (actualWeight / 15);
   this.currentWeight = this.initialWeight;
@@ -96,7 +97,13 @@ animalSchema.pre("save", function (next) {
 
 animalSchema.pre("save", function (next) {
   // map this.weight log and add growthRatio to each one of them
-  if (this.weightLog.length === 0) next();
+  if (this.weightLog.length === 0) return next();
+
+  this.weightLog.sort(function (a, b) {
+    var c = new Date(a.date);
+    var d = new Date(b.date);
+    return c - d;
+  });
 
   this.weightLog.forEach((log) => {
     ratio = ((log.weight - this.initialWeight) / this.initialWeight) * 100;

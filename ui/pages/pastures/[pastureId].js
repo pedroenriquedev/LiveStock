@@ -6,6 +6,9 @@ import Link from "next/link";
 import styles from "../../styles/PastureDetails.module.css";
 import Modal from "../../components/Modal";
 import MoveAnimals from "../../components/MoveAnimals";
+import { formateGrowth } from "../../utils/format";
+import CustomLink from "../../components/CustomLink";
+import Button from "../../components/Button";
 
 export default function BatchDetails() {
   const router = useRouter();
@@ -34,19 +37,17 @@ export default function BatchDetails() {
   useEffect(() => {
     if (!router.isReady) return;
     getPasture();
-    console.log(pasture);
   }, [router.isReady]);
 
   const handleCheckbox = (e) => {
     const animalId = e.target.value;
     const newArr = [...toBeChangedArray];
     if (e.target.checked) {
-      //console.log("add animal to change list");
       newArr.push(animalId);
       setToBeChangedArray(newArr);
       return;
     }
-    //console.log("remove animal from change list");
+
     const res = newArr.filter((id) => id !== animalId);
     setToBeChangedArray(res);
   };
@@ -57,8 +58,6 @@ export default function BatchDetails() {
     const res = await api.patch(`/api/v1/pasture/removeanimals/${pastureId}`, {
       animals: toBeChangedArray,
     });
-
-    console.log(res.data);
 
     router.reload();
   };
@@ -105,47 +104,63 @@ export default function BatchDetails() {
 
           <div>
             <h3>Herd</h3>
-            <div>
-              <span>name</span>
-              <span>color</span>
-              <span>breed</span>
-              <span>health</span>
-              <span>weight</span>
-              <span>growth</span>
+
+            <div className={styles.animalsContainer}>
+              <div className={styles.animalLabels}>
+                <div></div>
+                <span>name</span>
+                <span>color</span>
+                <span>breed</span>
+                <span>health</span>
+                <span>weight</span>
+                <span>growth</span>
+              </div>
+              <div className={styles.animals}>
+                {pasture.herd.map((animal) => (
+                  <label
+                    htmlFor={animal._id}
+                    key={animal._id}
+                    className={styles.label}
+                  >
+                    <input
+                      type="checkbox"
+                      value={animal._id}
+                      onChange={handleCheckbox}
+                      id={animal._id}
+                    />
+                    <p>{animal.name || "-"}</p>
+                    <p>{animal.color}</p>
+                    <p>{animal.breed}</p>
+                    <p>{animal.health}</p>
+                    <p>{animal.currentWeight}</p>
+                    <p>{formateGrowth(animal.growthRatio)}</p>
+
+                    <CustomLink
+                      href={`/animals/${animal._id}`}
+                      text={`Details`}
+                    />
+                  </label>
+                ))}
+              </div>
             </div>
-            {pasture.herd.map((animal) => (
-              <label
-                htmlFor={animal._id}
-                key={animal._id}
-                className={styles.label}
-              >
-                <input
-                  type="checkbox"
-                  value={animal._id}
-                  onChange={handleCheckbox}
-                  id={animal._id}
-                />
-                <p>{animal.name || "-"}</p>
-                <p>{animal.color}</p>
-                <p>{animal.breed}</p>
-                <p>{animal.health}</p>
-                <p>{animal.currentWeight}</p>
-                <p>{animal.growthRatio || "N/A"}</p>
-                <Link href={`/animals/${animal._id}`}>
-                  <a>Details</a>
-                </Link>
-              </label>
-            ))}
           </div>
 
-          <div>
-            {/* remove from, move from this to another, add animals */}
-            {/* only update this pasture with animals + update animals reference to pasture:null */}
-            <button onClick={handleRemoveAnimals}>Remove</button>
-            {/* only update this pasture with animals + update animals reference to pasture + update other pasture */}
-            <button onClick={handleMoveAnimals}>Move</button>
-            {/* two different requests, add animals to this pastures for animals not referenced with a pasture, and movetopasture for animals already on a pasture update this pasture with animals + update animals reference to pasture, could be a link to animals page to make things simplier, then default pasture on page load */}
-            <Link href={`/animals/`}>Add</Link>
+          <div className={styles.actions}>
+            <Button
+              color={toBeChangedArray.length < 1 ? "gray" : "red"}
+              onClick={handleRemoveAnimals}
+            >
+              Remove
+            </Button>
+
+            <Button
+              color={toBeChangedArray.length < 1 ? "gray" : "yellow"}
+              onClick={handleMoveAnimals}
+            >
+              Move
+            </Button>
+
+            <CustomLink href={"/animals"} text={"Add"} />
             {isModalOpen && (
               <Modal visible={handleOpenModal} cancel={handleCloseModal}>
                 <MoveAnimals animals={toBeChangedArray} pasture={pasture} />

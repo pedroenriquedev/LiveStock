@@ -21,9 +21,8 @@ const Animal = ({ animal, showCheckbox, manageToBeChangedArr }) => {
 
         <div className={styles.animalDetails}>
           <div>
-            <span>{animal._id}</span>
+            <span>name</span>
             <p>{animal.name || "-"}</p>
-            <p>{animal.breed || "-"}</p>
           </div>
 
           <div>
