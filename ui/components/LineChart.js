@@ -49,7 +49,6 @@ const LineChart = ({ weightLog }) => {
 
   const labels = weightLog.map((log) => getChartLabelDate(log.date));
   const weightArr = weightLog.map((log) => log.weight);
-  const tempLabels = ["Jan", "Feb", "March", "Apr", "Jun", "Jul"];
   return (
     <div>
       <Line

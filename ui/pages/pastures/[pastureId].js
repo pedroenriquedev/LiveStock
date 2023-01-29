@@ -16,6 +16,7 @@ export default function BatchDetails() {
   const [pasture, setPasture] = useState("");
   const [toBeChangedArray, setToBeChangedArray] = useState([]);
   const [isModalOpen, setModalOpen] = useState(false);
+  const [avgGrowth, setAvgGrowth] = useState(1);
 
   const handleOpenModal = () => {
     setModalOpen(true);
@@ -34,9 +35,21 @@ export default function BatchDetails() {
     }
   };
 
+  const getStats = async () => {
+    try {
+      const res = await api.post(`/api/v1/animal/stats`, {
+        pastureID: pastureId,
+      });
+      setAvgGrowth(res.data.data.stats.generalStats[0].avgGrowth);
+    } catch (error) {
+      handleError(error);
+    }
+  };
+
   useEffect(() => {
     if (!router.isReady) return;
     getPasture();
+    getStats();
   }, [router.isReady]);
 
   const handleCheckbox = (e) => {
@@ -70,6 +83,16 @@ export default function BatchDetails() {
     return;
   };
 
+  const getGrowthClass = (animalGrowth) => {
+    if (animalGrowth < avgGrowth && animalGrowth < avgGrowth * 0.8) {
+      return `${styles.red}`;
+    } else if (animalGrowth < avgGrowth) {
+      return `${styles.yellow}`;
+    } else {
+      return `${styles.none}`;
+    }
+  };
+
   return (
     <div>
       <GoBackButton router={router} />
@@ -99,6 +122,11 @@ export default function BatchDetails() {
             <div>
               <span>quantity</span>
               <p>{pasture.herd && pasture.herd.length}</p>
+            </div>
+
+            <div>
+              <span>average growth</span>
+              <p>{avgGrowth > 1 ? formateGrowth(avgGrowth) : "N/A"}</p>
             </div>
           </div>
 
@@ -133,7 +161,9 @@ export default function BatchDetails() {
                     <p>{animal.breed}</p>
                     <p>{animal.health}</p>
                     <p>{animal.currentWeight}</p>
-                    <p>{formateGrowth(animal.growthRatio)}</p>
+                    <p className={getGrowthClass(animal.growthRatio)}>
+                      {formateGrowth(animal.growthRatio)}
+                    </p>
 
                     <CustomLink
                       href={`/animals/${animal._id}`}

@@ -1,5 +1,7 @@
+const { default: mongoose } = require("mongoose");
 const Animal = require("../models/animalModel");
 const APIFeatures = require("../utils/apiFeatures");
+const ObjectId = mongoose.Types.ObjectId;
 
 exports.getAllAnimals = async (req, res, next) => {
   try {
@@ -161,5 +163,116 @@ exports.deleteWeightLog = async (req, res, next) => {
   }
 };
 
+const getGroupStats = async (params) => {
+  const { next, batchID, pastureID } = params;
+
+  const matchBatchStage = {};
+  const matchPastureStage = {};
+
+  const healthPipelineStages = [
+    {
+      $group: {
+        _id: "$health",
+        count: { $count: {} },
+      },
+    },
+    {
+      $sort: { _id: -1 },
+    },
+  ];
+
+  const generalPipelineStages = [
+    {
+      $group: {
+        _id: null,
+        count: { $count: {} },
+        avgInitialPrice: { $avg: "$initialPrice" },
+        avgInitialWeight: { $avg: "$initialWeight" },
+        avgWeight: { $avg: "$currentWeight" },
+        initialPriceSum: { $sum: "$initialPrice" },
+      },
+    },
+  ];
+
+  if (batchID) {
+    matchBatchStage.$match = { batch: ObjectId(batchID) };
+    generalPipelineStages[0].$group.avgCurrentWeight = {
+      $avg: "$currentWeight",
+    };
+    generalPipelineStages[0].$group.avgGrowth = {
+      $avg: "$growthRatio",
+    };
+    healthPipelineStages.unshift(matchBatchStage);
+    generalPipelineStages.unshift(matchBatchStage);
+  }
+
+  if (pastureID) {
+    matchPastureStage.$match = { pasture: ObjectId(pastureID) };
+    generalPipelineStages[0].$group.avgCurrentWeight = {
+      $avg: "$currentWeight",
+    };
+    generalPipelineStages[0].$group.avgGrowth = {
+      $avg: "$growthRatio",
+    };
+    healthPipelineStages.unshift(matchPastureStage);
+    generalPipelineStages.unshift(matchPastureStage);
+  }
+
+  try {
+    const healthStats = await Animal.aggregate(healthPipelineStages);
+
+    const generalStats = await Animal.aggregate(generalPipelineStages);
+
+    const { avgGrowth } = generalStats[0];
+
+    if (avgGrowth) {
+      const key = batchID ? "batch" : "pasture";
+
+      const belowAvgGrowth = await Animal.aggregate([
+        {
+          $match: { growthRatio: { $lt: avgGrowth } },
+        },
+        {
+          $match: { [key]: ObjectId(batchID || pastureID) },
+        },
+        {
+          $group: {
+            _id: null,
+            count: { $count: {} },
+            herd: { $push: "$$ROOT" },
+          },
+        },
+        {
+          $addFields: {
+            avg: avgGrowth,
+          },
+        },
+      ]);
+
+      return { healthStats, generalStats, belowAvgGrowth };
+    }
+
+    return { healthStats, generalStats };
+  } catch (error) {
+    return next(error);
+  }
+};
+
+exports.getAnimalStats = async (req, res, next) => {
+  const { batchID, pastureID } = req.body;
+
+  try {
+    const stats = await getGroupStats({ next, batchID, pastureID });
+
+    res.status(200).json({
+      status: "success",
+      data: {
+        stats,
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 // update
 // remove

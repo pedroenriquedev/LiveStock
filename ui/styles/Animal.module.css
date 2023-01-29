@@ -17,6 +17,8 @@
 .animal a {
     display: block;
     text-align: right;
+    height: min-content;
+    align-self: center;
 }
 
 .animalDetails {

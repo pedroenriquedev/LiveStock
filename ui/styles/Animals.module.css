@@ -6,7 +6,9 @@
     margin-top: 1rem;
 }
 
-
+.alignRight {
+    padding: 1rem 0;
+}
 
 .animals label {
     border-radius: 4px;

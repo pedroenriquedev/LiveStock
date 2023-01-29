@@ -8,6 +8,8 @@ router
   .get(animalController.getAllAnimals)
   .post(animalController.createAnimal);
 
+router.route("/stats").post(animalController.getAnimalStats);
+
 router
   .route("/:id")
   .get(animalController.getOneAnimal)

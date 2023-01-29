@@ -11,6 +11,7 @@ import MoveAnimals from "../../components/MoveAnimals";
 import Modal from "../../components/Modal";
 import styles from "../../styles/Animals.module.css";
 import Button from "../../components/Button";
+import NewAnimal from "../../components/NewAnimal";
 
 export default function Home() {
   const [animals, setAnimals] = useState([]);
@@ -24,14 +25,31 @@ export default function Home() {
   const [canAddToPasture, setCanAddToPasture] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
 
-  const [isModalOpen, setModalOpen] = useState(false);
+  const [isMoveModalOpen, setMoveModalOpen] = useState(false);
+  const [isAnimalModalOpen, setIsAnimalModalOpen] = useState(false);
 
-  const handleOpenModal = () => {
-    setModalOpen(true);
+  const handleMoveOpenModal = () => {
+    setMoveModalOpen(true);
   };
 
-  const handleCloseModal = () => {
-    setModalOpen(false);
+  const handleMoveCloseModal = () => {
+    setMoveModalOpen(false);
+  };
+
+  const handleAnimalOpenModal = () => {
+    setIsAnimalModalOpen(true);
+  };
+
+  const handleAnimalCloseModal = () => {
+    setIsAnimalModalOpen(false);
+  };
+
+  const handleNewAnimal = async (animal) => {
+    try {
+      const res = await api.post(`/api/v1/animal`, animal);
+    } catch (error) {
+      handleError(error);
+    }
   };
 
   const [sortOptions, setSortOptions] = useState([
@@ -209,12 +227,16 @@ export default function Home() {
   };
 
   const handleAddToPasture = () => {
-    handleOpenModal();
+    handleMoveOpenModal();
   };
 
   return (
     <div>
       <h2>Animals</h2>
+      <div className={styles.alignRight}>
+        <Button onClick={handleAnimalOpenModal}>Add animal</Button>
+      </div>
+
       <div>
         <h3>Filter by</h3>
         <div className={styles.filtersContainer}>
@@ -314,9 +336,18 @@ export default function Home() {
         )}
       </div>
 
-      {isModalOpen && (
-        <Modal visible={handleOpenModal} cancel={handleCloseModal}>
+      {isMoveModalOpen && (
+        <Modal visible={handleMoveOpenModal} cancel={handleMoveCloseModal}>
           <MoveAnimals animals={toBeChangedArray} />
+        </Modal>
+      )}
+
+      {isAnimalModalOpen && (
+        <Modal visible={handleAnimalOpenModal} cancel={handleAnimalCloseModal}>
+          <NewAnimal
+            getAnimal={handleNewAnimal}
+            closeModal={handleAnimalCloseModal}
+          />
         </Modal>
       )}
     </div>

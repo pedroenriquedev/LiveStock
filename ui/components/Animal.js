@@ -2,6 +2,7 @@ import Link from "next/link";
 import React from "react";
 import styles from "../styles/Animal.module.css";
 import { formatDate, formateGrowth } from "../utils/format";
+import CustomLink from "./CustomLink";
 
 const Animal = ({ animal, showCheckbox, manageToBeChangedArr }) => {
   const handleCheckbox = (e) => {
@@ -45,9 +46,7 @@ const Animal = ({ animal, showCheckbox, manageToBeChangedArr }) => {
             <p>{formateGrowth(animal.growthRatio)}</p>
           </div>
         </div>
-        <Link href={`animals/${animal._id}`} passHref>
-          <a className={styles.detailsLink}>Details</a>
-        </Link>
+        <CustomLink text={`Details`} href={`animals/${animal._id}`} />
       </label>
     </>
   );

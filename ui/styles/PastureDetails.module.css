@@ -81,3 +81,11 @@
     margin-left: auto;
     margin-top: 2rem;
 }
+
+.red {
+    color: red;
+}
+
+.yellow {
+    color: rgb(239, 205, 13);
+}
