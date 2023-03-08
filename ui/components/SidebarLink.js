@@ -12,10 +12,13 @@ const SidebarLink = (props) => {
       <a
         className={`${styles.link} ${
           router.pathname === props.path ? styles.active : ""
-        }`}
+        } ${props.showText === true ? styles.fullWidth : ""} `}
       >
-        <FontAwesomeIcon icon={props.icon} />
-        {props.text}
+        <FontAwesomeIcon
+          icon={props.icon}
+          className={`${props.showText === true ? styles.marginRight : ""}`}
+        />
+        {props.showText && props.text}
       </a>
     </Link>
   );

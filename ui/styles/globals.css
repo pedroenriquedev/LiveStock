@@ -11,6 +11,24 @@ html {
     font-size: 62.5%;
 }
 
+@media all and (max-width: 1200px) {
+    html {
+        font-size: 56.25%;
+    }
+}
+
+@media all and (max-width: 900px) {
+    html {
+        font-size: 50%;
+    }
+}
+
+@media all and (max-width: 600px) {
+    html {
+        font-size: 42.5%;
+    }
+}
+
 body {
     font-family: 'Poppins', sans-serif;
     font-size: 1.6rem;
@@ -45,6 +63,20 @@ ul {
     -ms-overflow-style: none;  /* Internet Explorer 10+ */
 }
 
+@media all and (max-width: 900px) {
+    .pagesContainer {
+        padding: 2rem 1rem;
+        padding-left: 2rem;
+    }
+}
+
+@media all and (max-width: 600px) {
+    .pagesContainer {
+        padding: 1rem .5rem;
+        padding-left: 1rem;
+    }
+}
+
 .pagesContainer::-webkit-scrollbar { /* WebKit */
     width: 0;
     height: 0;
@@ -60,6 +92,7 @@ a:visited {
 
 input, select {
     font: inherit;
+    
 }
 /* 
 0 - 600px: Phone

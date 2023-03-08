@@ -1,0 +1,55 @@
+.animal {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    margin-bottom: .5rem;
+}
+
+.animal input {
+    width: 5rem;
+}
+
+.filterElement {
+    display: inline-block;
+    width: 11rem;
+    height: 11rem;
+    font-size: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: inherit;
+    cursor: pointer;
+    background: none;
+    border: 1px solid black;
+    padding: .2rem;
+    transition: all .2s;
+    border-radius: 4px;
+    color: rgb(110, 110, 110);
+}
+
+.filterElement:hover {
+    background: rgb(255, 226, 80);
+    border-color: rgb(255, 226, 80);
+    color: black;
+}
+
+.filterElementsContainer {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.preSimulate button {
+    display: block;
+    margin: 1rem 0;
+}
+
+.simulationRate label{
+   margin-right: 1rem;
+}
+.simulationRate input {
+    width: 6rem;
+    padding: .1rem .5rem;
+    margin: .5rem 0;
+}

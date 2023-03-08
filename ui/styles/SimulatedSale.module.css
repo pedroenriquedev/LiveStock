@@ -1,0 +1,47 @@
+.animal {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    font-size: 1.4rem;
+    margin-bottom: 2rem;
+    align-items: center;
+}
+
+
+
+.animal span {
+    text-transform: capitalize;
+}
+
+.container {
+    padding: 1rem 2rem;
+    border-radius: 4px;
+    transition: all .2s;
+}
+
+.container:hover {
+    background: rgba(0, 0, 0, 0.095);
+    
+}
+
+.mainContainer > button {
+    margin: 1rem 0;
+}
+.saleDetails {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.4rem;
+    margin-top: 1.5rem;
+}
+
+.saleDetails span {
+    font-size: 1.6rem;
+    font-weight: bold;
+    text-transform: capitalize;
+}
+
+.animalsContainer {
+    height: 70vh;
+    overflow-y: auto;
+    border-top: 1px solid rgba(0, 0, 0, 0.095);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.095);
+}

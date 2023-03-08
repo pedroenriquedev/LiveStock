@@ -17,6 +17,7 @@ export default function BatchDetails() {
   const [toBeChangedArray, setToBeChangedArray] = useState([]);
   const [isModalOpen, setModalOpen] = useState(false);
   const [avgGrowth, setAvgGrowth] = useState(1);
+  const [avgMonthlyGrowth, setAvgMonthlyGrowth] = useState(1);
 
   const handleOpenModal = () => {
     setModalOpen(true);
@@ -41,6 +42,7 @@ export default function BatchDetails() {
         pastureID: pastureId,
       });
       setAvgGrowth(res.data.data.stats.generalStats[0].avgGrowth);
+      setAvgMonthlyGrowth(res.data.data.stats.generalStats[0].avgMonthlyGrowth);
     } catch (error) {
       handleError(error);
     }
@@ -127,6 +129,13 @@ export default function BatchDetails() {
             <div>
               <span>average growth</span>
               <p>{avgGrowth > 1 ? formateGrowth(avgGrowth) : "N/A"}</p>
+            </div>
+
+            <div>
+              <span>average monthly growth</span>
+              <p>
+                {avgMonthlyGrowth > 1 ? formateGrowth(avgMonthlyGrowth) : "N/A"}
+              </p>
             </div>
           </div>
 

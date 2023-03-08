@@ -6,6 +6,8 @@
     margin-top: 1rem;
 }
 
+
+
 .alignRight {
     padding: 1rem 0;
 }
@@ -36,11 +38,17 @@
     justify-content: space-between;
     align-items: center;
     width: max-content;
+    font-size: 1.2rem;
 }
 
 .filtersContainer div label input {
     margin-right: .5rem;
+    width: 1.3rem;
 }
+
+
+
+
 
 .sortButton {
     font: inherit;
@@ -67,4 +75,29 @@
 
 .actions button:first-of-type {
     margin-right: 2rem;
+}
+
+@media all and (max-width: 600px) {
+    .filtersContainer div label {
+        font-size: 1rem;
+        width: fit-content;
+    }
+
+    .filtersContainer div {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .filtersContainer div h4 {
+        grid-column: 1 / 3;
+    }
+
+    .filtersContainer div label input {
+        width: 1rem;
+    }
+    .sortButton {
+    font-size: .8rem;
+    padding: .1rem .4rem;
+    margin-right: .5rem;
+}
 }

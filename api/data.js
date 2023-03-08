@@ -6,6 +6,14 @@ const Animal = require("./models/animalModel");
 const Batch = require("./models/batchModel");
 const Pasture = require("./models/pastureModel");
 
+function getMonthDiff(dateFrom, dateTo) {
+  return (
+    dateTo.getMonth() -
+    dateFrom.getMonth() +
+    12 * (dateTo.getFullYear() - dateFrom.getFullYear())
+  );
+}
+
 const batchOneAnimals = [
   {
     name: "Qubiq",
@@ -659,8 +667,8 @@ const batchFourAnimals = [
 ];
 
 // 3 years batch weightLogs
-// date 5/13/2019
-// 9/14/2019, 175
+// date 9/14/2019
+// 1/15/2019, 175
 
 const threeYearsBatchLogs = [
   [
@@ -1999,7 +2007,7 @@ const sixMonthsBatchLogs = [
 
 const threeYearsBatch = {
   seller: "Fazenda Sao Francisco",
-  date: "5/13/2019",
+  date: "9/14/2019",
   rate: 249,
 };
 
@@ -2099,6 +2107,23 @@ const addWeightLog = async (animalID, log) => {
 
     // update current weight with latest log (date wise, not createdAt wise)
     doc.currentWeight = doc.weightLog.at(-1).weight;
+
+    const monthDiff = getMonthDiff(doc.dateOfPurchase, new Date(date));
+
+    console.log(monthDiff);
+
+    // Compounding Monthly Growth Rate
+    // CMGR = (Final Month Value / Initial Month Value) ^ (1 / # of Months) – 1
+    const averageMonthlyGrowth =
+      (Math.pow(
+        doc.weightLog.at(-1).weight / doc.initialWeight,
+        1 / monthDiff
+      ) -
+        1) *
+      100;
+
+    doc.averageMonthlyGrowth = averageMonthlyGrowth;
+
     await doc.save();
   } catch (error) {
     console.log(error);

@@ -2,12 +2,25 @@
     text-transform: capitalize;
     font-weight: 600;
     padding: 1rem 2rem;
-    width: 100%;
     border-radius: 6px;
     border: 1px solid transparent;
     color: #141414;
     transition: background .2s;
 }
+
+@media all and (max-width: 900px) {
+    .link {
+        font-size: 1.4rem;
+    }
+}
+
+@media all and (max-width: 600px) {
+    .link {
+        font-size: 1.1rem;
+        padding: .6rem 1.2rem;
+    }
+}
+
 
 .link:hover {
     border-color: #b6b6b6;
@@ -22,6 +35,14 @@
     color: #fff;
 }
 
-.link svg {
+/* .link svg {
     margin-right: 2rem;
+} */
+
+.marginRight {
+    margin-right: 2rem;
+}
+
+.fullWidth {
+    width: 100%;
 }

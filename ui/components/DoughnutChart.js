@@ -27,12 +27,11 @@ ChartJS.register(
 const DoughnutChart = ({ healthStats }) => {
   const labels = healthStats.map((e) => e._id);
   const data = healthStats.map((e) => e.count);
-  console.log(data);
   return (
     <div>
       <Doughnut
-        width={115}
-        height={345}
+        width={100}
+        height={250}
         data={{
           labels: labels,
           datasets: [
@@ -52,6 +51,7 @@ const DoughnutChart = ({ healthStats }) => {
         }}
         options={{
           maintainAspectRatio: false,
+          responsive: true,
           plugins: {
             legend: {
               labels: {

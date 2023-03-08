@@ -9,7 +9,14 @@
     padding: .3rem .8rem;
     cursor: pointer;
     text-transform: capitalize;
-    
+    line-height: 19.5px;
+}
+
+@media all and (max-width: 400px) {
+    .link {
+        font-size: 1rem;
+        padding: .2rem .4rem;
+    }
 }
 
 .link:visited {

@@ -68,6 +68,7 @@ const animalSchema = new Schema({
     type: Number,
     immutable: true,
   },
+  averageMonthlyGrowth: Number,
   dateOfPurchase: {
     type: Date,
   },
@@ -105,6 +106,7 @@ animalSchema.pre("save", function (next) {
     return c - d;
   });
 
+  console.log(this);
   this.weightLog.forEach((log) => {
     ratio = ((log.weight - this.initialWeight) / this.initialWeight) * 100;
     log.growthRatio = ratio;

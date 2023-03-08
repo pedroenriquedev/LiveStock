@@ -95,6 +95,11 @@ export default function AnimalDetails() {
         </div>
 
         <div>
+          <span>avg monthly growth</span>
+          <p>{formateGrowth(animal.averageMonthlyGrowth)}</p>
+        </div>
+
+        <div>
           <span className={styles.specialField}>
             pasture
             {animal.pasture && (

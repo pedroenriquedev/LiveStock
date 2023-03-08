@@ -19,8 +19,21 @@
     cursor: pointer;
     background: none;
     border: none;
+    font-size: 1.5rem;
 }
 .animalContainer div {
     display: flex;
     flex-direction: column;
+}
+
+@media all and (max-width: 450px) {
+    .animalContainer {
+    margin-bottom: 2rem;
+    padding-right: 2rem;
+   padding-left: 0;
+    }
+
+    .button {
+    right: 1%;
+}
 }

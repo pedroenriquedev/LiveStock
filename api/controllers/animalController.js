@@ -3,6 +3,14 @@ const Animal = require("../models/animalModel");
 const APIFeatures = require("../utils/apiFeatures");
 const ObjectId = mongoose.Types.ObjectId;
 
+function getMonthDiff(dateFrom, dateTo) {
+  return (
+    dateTo.getMonth() -
+    dateFrom.getMonth() +
+    12 * (dateTo.getFullYear() - dateFrom.getFullYear())
+  );
+}
+
 exports.getAllAnimals = async (req, res, next) => {
   try {
     if (!req.query.sort) {
@@ -125,6 +133,23 @@ exports.addWeightLog = async (req, res, next) => {
 
     // update current weight with latest log (date wise, not createdAt wise)
     doc.currentWeight = doc.weightLog.at(-1).weight;
+
+    const monthDiff = getMonthDiff(doc.dateOfPurchase, new Date(date));
+
+    console.log(monthDiff);
+
+    // Compounding Monthly Growth Rate
+    // CMGR = (Final Month Value / Initial Month Value) ^ (1 / # of Months) – 1
+    const averageMonthlyGrowth =
+      (Math.pow(
+        doc.weightLog.at(-1).weight / doc.initialWeight,
+        1 / monthDiff
+      ) -
+        1) *
+      100;
+
+    doc.averageMonthlyGrowth = averageMonthlyGrowth;
+
     await doc.save();
 
     res.status(200).json({
@@ -190,6 +215,7 @@ const getGroupStats = async (params) => {
         avgInitialWeight: { $avg: "$initialWeight" },
         avgWeight: { $avg: "$currentWeight" },
         initialPriceSum: { $sum: "$initialPrice" },
+        avgMonthlyGrowth: { $avg: "$averageMonthlyGrowth" },
       },
     },
   ];
@@ -248,7 +274,6 @@ const getGroupStats = async (params) => {
           },
         },
       ]);
-
       return { healthStats, generalStats, belowAvgGrowth };
     }
 

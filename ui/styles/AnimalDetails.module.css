@@ -7,6 +7,14 @@
     margin-top: 2rem;
 }
 
+@media all and (max-width: 500px) {
+    .details {
+        row-gap: 1rem;
+    column-gap: 1rem;
+    font-size: 1rem;
+    grid-template-columns:1fr 1fr 1fr;
+    }
+}
 
 .details span {
     text-transform: uppercase;

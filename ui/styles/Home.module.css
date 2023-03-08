@@ -1,0 +1,16 @@
+.general {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.general span {
+    font-size: 1.26rem;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.general p {
+    font-size: 1.4rem;
+}

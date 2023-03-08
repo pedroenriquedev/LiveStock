@@ -21,6 +21,7 @@ ChartJS.register(
   Tooltip,
   Legend
 );
+import styles from "../styles/LineChart.module.css";
 
 const LineChart = ({ weightLog }) => {
   const getChartLabelDate = (dateStr) => {
@@ -50,10 +51,10 @@ const LineChart = ({ weightLog }) => {
   const labels = weightLog.map((log) => getChartLabelDate(log.date));
   const weightArr = weightLog.map((log) => log.weight);
   return (
-    <div>
+    <div className={styles.chart}>
       <Line
         width={100}
-        height={300}
+        height={250}
         data={{
           labels: labels,
           datasets: [
@@ -69,6 +70,17 @@ const LineChart = ({ weightLog }) => {
         }}
         options={{
           maintainAspectRatio: false,
+          responsive: true,
+          plugins: {
+            legend: {
+              labels: {
+                // This more specific font property overrides the global property
+                font: {
+                  family: "inherit",
+                },
+              },
+            },
+          },
         }}
       />
     </div>

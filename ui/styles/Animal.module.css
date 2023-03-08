@@ -68,3 +68,27 @@
     background: rgb(253, 232, 125);
     color: rgb(57, 57, 57);
 }
+
+@media all and (max-width: 500px) {
+   .animal {
+    margin: 1rem 0;
+    padding: .2rem .8rem;
+   }
+
+   .animalDetails {
+    /* display: flex;
+    justify-content: space-around;
+    flex-grow: 3; */
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    font-size: 1rem;
+}
+
+.animalDetails div span {
+    font-size: .8rem;
+}
+
+.animalDetails div p {
+    font-size: .9rem;
+}
+}

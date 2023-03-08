@@ -1,14 +1,11 @@
-import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import Modal from "../components/Modal";
-import NewAnimal from "../components/NewAnimal";
 import { api, handleError } from "../utils/axios";
 import styles from "../styles/Home.module.css";
 import DoughnutChart from "../components/DoughnutChart";
+import { formateGrowth, formatePrice } from "../utils/format";
 
 export default function Home() {
-  const [isModalOpen, setModalOpen] = useState(false);
   const [generalStats, setGeneralStats] = useState([]);
   const [healthStats, setHealthStats] = useState([]);
   const router = useRouter();
@@ -34,7 +31,7 @@ export default function Home() {
 
     return `${welcomeText}, User!`;
   };
-
+  console.log(generalStats);
   useEffect(() => {
     if (!router.isReady) return;
     getStats();
@@ -56,6 +53,16 @@ export default function Home() {
           <div>
             <span>average weight</span>
             <p>{generalStats.avgWeight}</p>
+          </div>
+
+          <div>
+            <span>invesment</span>
+            <p>{`R$${formatePrice(generalStats.initialPriceSum)}`}</p>
+          </div>
+
+          <div>
+            <span>average monthly growth</span>
+            <p>{`${formateGrowth(generalStats.avgMonthlyGrowth)}`}</p>
           </div>
         </div>
         <div className={styles.health}>

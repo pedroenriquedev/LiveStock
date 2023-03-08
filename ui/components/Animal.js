@@ -27,7 +27,7 @@ const Animal = ({ animal, showCheckbox, manageToBeChangedArr }) => {
           </div>
 
           <div>
-            <span>date of purchase</span>
+            <span>date</span>
             <p>{formatDate(animal.dateOfPurchase)}</p>
           </div>
 

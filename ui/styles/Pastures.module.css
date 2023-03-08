@@ -26,3 +26,13 @@
     justify-self: right;
 }
 
+.pasturesContainer {
+    font-size: 1.4rem;
+}
+
+@media all and (max-width: 450px) {
+    .pasturesContainer {
+        font-size: 1.2rem;
+    }
+}
+

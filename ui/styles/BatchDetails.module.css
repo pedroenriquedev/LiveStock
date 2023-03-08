@@ -1,9 +1,12 @@
 .details {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
+    column-gap: 1rem;
     row-gap: 2rem;
     margin-top: 2rem;
 }
+
+
 
 .details div span {
     text-transform: uppercase;
@@ -17,6 +20,8 @@
 .main {
     font-size: 1.3rem;
 }
+
+
 
 .animals h3 {
     text-transform: capitalize;
@@ -49,4 +54,16 @@
 .animals > div div span {
     text-transform: uppercase;
     color: rgba(0, 0, 0, 0.263);
+}
+
+@media all and (max-width: 450px) {
+    .details {
+        row-gap: .8rem;
+        margin-top: 1rem;
+        font-size: 1.2rem;
+    }
+
+    .main {
+        font-size: 1.2rem;
+    }
 }
