@@ -135,14 +135,37 @@ export default function Simulation() {
 
           <div className={styles.preSimulate}>
             {animals.length > 0 && (
-              <Button
-                onClick={() => {
-                  setShowFilters(true);
-                  setAnimals([]);
-                }}
-              >
-                Return
-              </Button>
+              <>
+                <Button
+                  onClick={() => {
+                    setShowFilters(true);
+                    setAnimals([]);
+                  }}
+                >
+                  Return
+                </Button>
+                <div className={styles.animalLabels}>
+                  <div>
+                    <span>Name</span>
+                  </div>
+
+                  <div>
+                    <span>Color</span>
+                  </div>
+
+                  <div>
+                    <span>Breed</span>
+                  </div>
+
+                  <div>
+                    <span>Weight(kg)</span>
+                  </div>
+
+                  <div>
+                    <span>Rate(R$)</span>
+                  </div>
+                </div>
+              </>
             )}
 
             {animals.map((animal, i) => (

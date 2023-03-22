@@ -13,8 +13,8 @@ const SimulatedSale = ({ animals, handleShowSimulation }) => {
   };
 
   const getProfit = (initialPrice, price) => {
-    return `${formatePrice(price - initialPrice)} (${formateGrowth(
-      (price / initialPrice) * 100
+    return `R$${formatePrice(price - initialPrice)} (${formateGrowth(
+      ((price - initialPrice) / initialPrice) * 100
     )})`;
   };
 
@@ -39,7 +39,7 @@ const SimulatedSale = ({ animals, handleShowSimulation }) => {
       total,
       investment: initialTotal,
       profit: total - initialTotal,
-      margin: (total / initialTotal) * 100,
+      margin: ((total - initialTotal) / initialTotal) * 100,
     };
   };
 

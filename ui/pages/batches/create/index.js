@@ -25,7 +25,7 @@ const CreateNewBatch = () => {
 
   const DUMMY = [
     {
-      name: "Boi Teste A",
+      name: "Placeholder A",
       breed: "Nelore",
       initialWeight: 148,
       // date of purchase and price ratio could be hidden since it's a batch
@@ -35,7 +35,7 @@ const CreateNewBatch = () => {
       color: "malhado",
     },
     {
-      name: "Boi Teste B",
+      name: "Placeholder B",
       breed: "Mascavo",
       birthdate: null,
       initialWeight: 130,
@@ -46,7 +46,7 @@ const CreateNewBatch = () => {
       color: "cinza",
     },
     {
-      name: "Boi Teste C",
+      name: "Placeholder C",
       breed: "Nelore",
       initialWeight: 140,
       health: "poor",

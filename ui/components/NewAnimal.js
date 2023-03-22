@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styles from "../styles/NewAnimal.module.css";
+import Button from "./Button";
 
 const NewAnimal = ({
   showDateOfPurchase = true,
@@ -110,7 +111,7 @@ const NewAnimal = ({
           className={styles.full}
         />
 
-        <button>submit</button>
+        <Button>Submit</Button>
         {/* when hit submit, send all data out via props */}
       </form>
     </div>
