@@ -4,6 +4,7 @@ import { api, handleError } from "../utils/axios";
 import styles from "../styles/Home.module.css";
 import DoughnutChart from "../components/DoughnutChart";
 import { formateGrowth, formatePrice } from "../utils/format";
+import Layout from "../components/Layout";
 
 export default function Home() {
   const [generalStats, setGeneralStats] = useState([]);
@@ -38,38 +39,40 @@ export default function Home() {
   }, [router.isReady]);
 
   return (
-    <div>
+    <Layout>
       <div>
-        <h1>{getGreetingMessage()}</h1>
-      </div>
+        <div>
+          <h1>{getGreetingMessage()}</h1>
+        </div>
 
-      <div className={styles.stats}>
-        <div className={styles.general}>
-          <div>
-            <span>active cattle</span>
-            <p>{generalStats.count}</p>
+        <div className={styles.stats}>
+          <div className={styles.general}>
+            <div>
+              <span>active cattle</span>
+              <p>{generalStats.count}</p>
+            </div>
+
+            <div>
+              <span>average weight</span>
+              <p>{generalStats.avgWeight}</p>
+            </div>
+
+            <div>
+              <span>invesment</span>
+              <p>{`R$${formatePrice(generalStats.initialPriceSum)}`}</p>
+            </div>
+
+            <div>
+              <span>average monthly growth</span>
+              <p>{`${formateGrowth(generalStats.avgMonthlyGrowth)}`}</p>
+            </div>
           </div>
-
-          <div>
-            <span>average weight</span>
-            <p>{generalStats.avgWeight}</p>
-          </div>
-
-          <div>
-            <span>invesment</span>
-            <p>{`R$${formatePrice(generalStats.initialPriceSum)}`}</p>
-          </div>
-
-          <div>
-            <span>average monthly growth</span>
-            <p>{`${formateGrowth(generalStats.avgMonthlyGrowth)}`}</p>
+          <div className={styles.health}>
+            <h3>Health Stats</h3>
+            <DoughnutChart healthStats={healthStats} />
           </div>
         </div>
-        <div className={styles.health}>
-          <h3>Health Stats</h3>
-          <DoughnutChart healthStats={healthStats} />
-        </div>
       </div>
-    </div>
+    </Layout>
   );
 }

@@ -12,6 +12,7 @@ import Modal from "../../components/Modal";
 import styles from "../../styles/Animals.module.css";
 import Button from "../../components/Button";
 import NewAnimal from "../../components/NewAnimal";
+import Layout from "../../components/Layout";
 
 export default function Home() {
   const [animals, setAnimals] = useState([]);
@@ -231,7 +232,7 @@ export default function Home() {
   };
 
   return (
-    <div>
+    <Layout>
       <h2>Animals</h2>
       <div className={styles.alignRight}>
         <Button onClick={handleAnimalOpenModal}>Add animal</Button>
@@ -350,6 +351,6 @@ export default function Home() {
           />
         </Modal>
       )}
-    </div>
+    </Layout>
   );
 }

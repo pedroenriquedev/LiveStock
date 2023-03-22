@@ -5,6 +5,7 @@ import CustomLink from "../../components/CustomLink";
 import Button from "../../components/Button";
 import Modal from "../../components/Modal";
 import NewPasture from "../../components/NewPasture";
+import Layout from "../../components/Layout";
 
 export default function Pasture() {
   const [pastures, setPastures] = useState([]);
@@ -32,7 +33,7 @@ export default function Pasture() {
   }, []);
 
   return (
-    <div>
+    <Layout>
       <h2>Pastures</h2>
       <Button onClick={handleOpenModal}>Add Pasture</Button>
       {isModalOpen && (
@@ -77,6 +78,6 @@ export default function Pasture() {
       ) : (
         <span>No pastures</span>
       )}
-    </div>
+    </Layout>
   );
 }

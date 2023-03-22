@@ -1,17 +1,37 @@
+@keyframes fadeInFromBottom {
+    0% {
+        transform: translate(-50%, 20%);
+        opacity: 0;
+    }
+
+
+    70% {
+        transform: translate(-50%, -60%);
+    }
+
+    100% {
+        transform: translate(-50%, -50%);
+        opacity: 100%;
+    }
+}
+
 .container {
     background: rgb(241, 240, 240);
     display: block;
     position: fixed;
     left: 50%;
     top: 50%;
-    transform: translate(-50%, -50%);
     max-width: 80vw;
     min-width: 35vw;
     max-height: 90vh;
     min-height: 20vh;
+    transform: translate(-50%, -50%);
     border-radius: 16px;
     padding: 2rem;
     z-index: 2;
+    animation: fadeInFromBottom;
+    animation-duration: .4s;
+    animation-timing-function: ease-in;
 }
 
 @media all and (max-width: 600px) {

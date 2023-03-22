@@ -9,6 +9,7 @@ import MoveAnimals from "../../components/MoveAnimals";
 import { formateGrowth } from "../../utils/format";
 import CustomLink from "../../components/CustomLink";
 import Button from "../../components/Button";
+import Layout from "../../components/Layout";
 
 export default function BatchDetails() {
   const router = useRouter();
@@ -96,7 +97,7 @@ export default function BatchDetails() {
   };
 
   return (
-    <div>
+    <Layout>
       <GoBackButton router={router} />
       {pasture.herd && (
         <div>
@@ -208,6 +209,6 @@ export default function BatchDetails() {
           </div>
         </div>
       )}
-    </div>
+    </Layout>
   );
 }

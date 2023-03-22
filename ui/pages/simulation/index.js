@@ -5,6 +5,7 @@ import { formatDate } from "../../utils/format";
 import SimulatedSale from "../../components/SimulatedSale";
 import styles from "../../styles/Simulation.module.css";
 import Button from "../../components/Button";
+import Layout from "../../components/Layout";
 
 export default function Simulation() {
   const router = useRouter();
@@ -79,7 +80,7 @@ export default function Simulation() {
   }, [router.isReady]);
 
   return (
-    <div>
+    <Layout>
       <h2>Simulate a sale</h2>
 
       {!showSimulatedSale && (
@@ -215,6 +216,6 @@ export default function Simulation() {
           handleShowSimulation={() => handleSimulate(showSimulatedSale)}
         />
       )}
-    </div>
+    </Layout>
   );
 }

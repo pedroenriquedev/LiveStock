@@ -11,6 +11,7 @@ import Modal from "../../components/Modal";
 import AddWeightLog from "../../components/AddWeightLog";
 import LineChart from "../../components/LineChart";
 import Button from "../../components/Button";
+import Layout from "../../components/Layout";
 
 export default function AnimalDetails() {
   const router = useRouter();
@@ -41,7 +42,7 @@ export default function AnimalDetails() {
   }, [router.isReady]);
 
   return (
-    <div>
+    <Layout>
       <GoBackButton router={router} />
       <div className={styles.details}>
         <div>
@@ -157,6 +158,6 @@ export default function AnimalDetails() {
               </div>
             ))}
       </div>
-    </div>
+    </Layout>
   );
 }

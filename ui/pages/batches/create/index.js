@@ -9,6 +9,7 @@ import { getTodayString } from "../../../utils/getTodayString";
 import GoBackButton from "../../../components/GoBackButton";
 import { useRouter } from "next/router";
 import Button from "../../../components/Button";
+import Layout from "../../../components/Layout";
 
 const CreateNewBatch = () => {
   const todayString = getTodayString();
@@ -106,7 +107,7 @@ const CreateNewBatch = () => {
   };
 
   return (
-    <div>
+    <Layout>
       <GoBackButton router={router} />
       <h2>Batch information</h2>
       <form onSubmit={handleForm}>
@@ -198,7 +199,7 @@ const CreateNewBatch = () => {
           </Modal>
         )}
       </div>
-    </div>
+    </Layout>
   );
 };
 

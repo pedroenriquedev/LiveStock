@@ -5,6 +5,7 @@ import GoBackButton from "../../components/GoBackButton";
 import { formatDate, formateGrowth, formatePrice } from "../../utils/format";
 import styles from "../../styles/BatchDetails.module.css";
 import Link from "next/link";
+import Layout from "../../components/Layout";
 
 export default function BatchDetails() {
   const router = useRouter();
@@ -26,7 +27,7 @@ export default function BatchDetails() {
   }, [router.isReady]);
 
   return (
-    <div>
+    <Layout>
       <GoBackButton router={router} />
       {batch.cattle && (
         <div className={styles.main}>
@@ -101,6 +102,6 @@ export default function BatchDetails() {
           </div>
         </div>
       )}
-    </div>
+    </Layout>
   );
 }

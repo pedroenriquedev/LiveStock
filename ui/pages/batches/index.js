@@ -4,6 +4,7 @@ import styles from "../../styles/Batches.module.css";
 import Link from "next/link";
 import { formatePrice } from "../../utils/format";
 import CustomLink from "../../components/CustomLink";
+import Layout from "../../components/Layout";
 
 export default function Batches() {
   const [batches, setBatches] = useState([]);
@@ -27,7 +28,7 @@ export default function Batches() {
   };
 
   return (
-    <div>
+    <Layout>
       <h2>Batches</h2>
       <CustomLink href={`/batches/create`} text={`Create a new batch`} />
       {batches.length > 0 ? (
@@ -62,6 +63,6 @@ export default function Batches() {
       ) : (
         <span>No batches</span>
       )}
-    </div>
+    </Layout>
   );
 }
