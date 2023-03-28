@@ -1,5 +1,5 @@
-//
-// YES, I KNOW, THIS WHOLE FILE AND ITS CODE IS A HOT MESS, MY BRAIN IS SO FRIED RN FROM WRITING THESE SCRIPTS THAT I'LL PROBABLY NEVER TOUCH THIS AGAIN. DO NOT FEEL LIKE REFACTORING AT ALL. PEACE.
+// SCRIPTS TO REMOVE/INSERT ALL DEV DATA
+// TODO: Refactor this hot mess
 
 const mongoose = require("mongoose");
 const Animal = require("./models/animalModel");
