@@ -4,8 +4,8 @@ Tool to help farmers with tracking their inventory and cattle growth.
 
 ## Tech Stack
 
-- Next JS, ExpressJS/NodeJS, Mongoose/MongoDB, CSS Modules.
-- React ChartJS, Framer Motion.
+- **Back End:** ExpressJS/NodeJS, Mongoose/MongoDB.
+- **Front End:** Next JS, React ChartJS, Framer Motion, CSS Modules.
 
 ## Live Demo
 
