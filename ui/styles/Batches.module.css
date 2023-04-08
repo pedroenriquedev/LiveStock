@@ -9,6 +9,11 @@
     align-items: center;
 }
 
+.batchSkeleton {
+    margin: 2rem 0;
+    height: 5.3rem;
+}
+
 @media all and (max-width: 400px) {
     .batch {
        

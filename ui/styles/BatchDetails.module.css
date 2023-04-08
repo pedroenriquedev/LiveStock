@@ -31,6 +31,12 @@
     display: grid;
     grid-template-columns: repeat(5, 1fr) max-content;
     margin: 1.5rem 0;
+    height: 4rem;
+    width: 100%;
+}
+
+.animalSkeleton {
+    display: block !important;
 }
 
 .animals > div div:last-of-type {

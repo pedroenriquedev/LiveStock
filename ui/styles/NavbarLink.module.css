@@ -6,19 +6,27 @@
     border: 1px solid transparent;
     color: #141414;
     transition: background .2s;
+    width: 100%;
 }
 
 @media all and (max-width: 900px) {
     .link {
-        font-size: 1.4rem;
+        width: 300px;
+        font-size: 3rem;
+        margin-bottom: 3rem;
     }
 }
 
 @media all and (max-width: 600px) {
     .link {
-        font-size: 1.1rem;
-        padding: .6rem 1.2rem;
+        width: 200px;
+        font-size: 2.4rem;
+        margin-bottom: 2rem;
     }
+}
+
+@media all and (max-width: 600px) {
+    
 }
 
 
@@ -29,6 +37,7 @@
 
 .active {
     background: #242424;
+    color: #fff;
 }
 
 .active:visited {
@@ -41,8 +50,4 @@
 
 .marginRight {
     margin-right: 2rem;
-}
-
-.fullWidth {
-    width: 100%;
 }

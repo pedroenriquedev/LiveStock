@@ -13,6 +13,8 @@ import styles from "../../styles/Animals.module.css";
 import Button from "../../components/Button";
 import NewAnimal from "../../components/NewAnimal";
 import Layout from "../../components/Layout";
+import FilterSkeleton from "../../components/Animals/FilterSkeleton";
+import AnimalSkeleton from "../../components/Animals/AnimalSkeleton";
 
 export default function Home() {
   const [animals, setAnimals] = useState([]);
@@ -21,6 +23,7 @@ export default function Home() {
   const [pastCheckedState, setPastCheckedState] = useState("");
   const [batchesCheckedState, setBatchesCheckedState] = useState("");
   const [currentParams, setCurrentParams] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
 
   const [toBeChangedArray, setToBeChangedArray] = useState([]);
   const [canAddToPasture, setCanAddToPasture] = useState(false);
@@ -123,9 +126,18 @@ export default function Home() {
     }
   };
 
+  const fetchData = async () => {
+    try {
+      await getAnimals();
+      await getBatchesAndPastures();
+      setIsLoading(false);
+    } catch (error) {
+      handleError(error);
+    }
+  };
+
   useEffect(() => {
-    getAnimals();
-    getBatchesAndPastures();
+    fetchData();
   }, []);
 
   const handlePastCheckbox = (position, value) => {
@@ -243,41 +255,51 @@ export default function Home() {
         <div className={styles.filtersContainer}>
           <div>
             <h4>Pastures</h4>
-            {pastures.map((pasture, index) => (
-              <label htmlFor={pasture._id} key={pasture._id}>
-                <input
-                  id={pasture._id}
-                  value={pasture._id}
-                  name="pasture"
-                  type="checkbox"
-                  checked={pastCheckedState[index]}
-                  onChange={(e) => {
-                    handlePastCheckbox(index, e.target.value);
-                  }}
-                />
-                {pasture.name}
-              </label>
-            ))}
+
+            <div className={styles.filterContainer}>
+              {isLoading && <FilterSkeleton filters={4} />}
+              {pastures.map((pasture, index) => (
+                <label htmlFor={pasture._id} key={pasture._id}>
+                  <input
+                    id={pasture._id}
+                    value={pasture._id}
+                    name="pasture"
+                    type="checkbox"
+                    checked={pastCheckedState[index]}
+                    onChange={(e) => {
+                      handlePastCheckbox(index, e.target.value);
+                    }}
+                  />
+                  {pasture.name}
+                </label>
+              ))}
+            </div>
           </div>
 
           <div>
             <h4>Batches</h4>
-            {batches.map((batch, index) => (
-              <label
-                htmlFor={batch._id === "null" ? "batch_null" : batch._id}
-                key={batch._id}
-              >
-                <input
-                  id={batch._id === "null" ? "batch_null" : batch._id}
-                  value={batch._id}
-                  name="batch"
-                  type="checkbox"
-                  checked={batchesCheckedState[index]}
-                  onChange={(e) => handleBatchesCheckbox(index, e.target.value)}
-                />
-                {batch.seller}
-              </label>
-            ))}
+
+            <div className={styles.filterContainer}>
+              {isLoading && <FilterSkeleton filters={4} />}
+              {batches.map((batch, index) => (
+                <label
+                  htmlFor={batch._id === "null" ? "batch_null" : batch._id}
+                  key={batch._id}
+                >
+                  <input
+                    id={batch._id === "null" ? "batch_null" : batch._id}
+                    value={batch._id}
+                    name="batch"
+                    type="checkbox"
+                    checked={batchesCheckedState[index]}
+                    onChange={(e) =>
+                      handleBatchesCheckbox(index, e.target.value)
+                    }
+                  />
+                  {batch.seller}
+                </label>
+              ))}
+            </div>
           </div>
           <Button onClick={handleApplyFilter}>Apply</Button>
         </div>
@@ -306,6 +328,7 @@ export default function Home() {
       </div>
 
       <div className={styles.animals}>
+        {isLoading && <AnimalSkeleton animals={6} />}
         {animals.map((animal) => (
           <Animal
             animal={animal}

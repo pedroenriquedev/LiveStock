@@ -6,10 +6,13 @@ import Button from "../../components/Button";
 import Modal from "../../components/Modal";
 import NewPasture from "../../components/NewPasture";
 import Layout from "../../components/Layout";
-
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+import PastureSkeleton from "../../components/Pastures/PastureSkeleton";
 export default function Pasture() {
   const [pastures, setPastures] = useState([]);
   const [isModalOpen, setModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const handleOpenModal = () => {
     setModalOpen(true);
@@ -23,6 +26,7 @@ export default function Pasture() {
     try {
       const res = await api.get("/api/v1/pasture");
       setPastures(res.data.data.data);
+      setIsLoading(false);
     } catch (error) {
       handleError(error);
     }
@@ -42,9 +46,14 @@ export default function Pasture() {
         </Modal>
       )}
 
-      {pastures.length > 0 ? (
-        <div className={styles.pasturesContainer}>
-          {pastures.map((pasture) => (
+      <div className={styles.pasturesContainer}>
+        {isLoading && (
+          <div className={styles.pastureSkeleton}>
+            <PastureSkeleton pastures={4} />
+          </div>
+        )}
+        {pastures.length > 0 &&
+          pastures.map((pasture) => (
             <div className={styles.pasture} key={pasture._id}>
               <div>
                 <span>name</span>
@@ -74,10 +83,8 @@ export default function Pasture() {
               </div>
             </div>
           ))}
-        </div>
-      ) : (
-        <span>No pastures</span>
-      )}
+        {pastures.length === 0 && !isLoading && <p>No pastures.</p>}
+      </div>
     </Layout>
   );
 }

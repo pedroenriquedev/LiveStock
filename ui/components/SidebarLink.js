@@ -11,14 +11,11 @@ const SidebarLink = (props) => {
     <Link href={props.path} passHref>
       <a
         className={`${styles.link} ${
-          router.pathname === props.path ? styles.active : ""
-        } ${props.showText === true ? styles.fullWidth : ""} `}
+          router.asPath === props.path ? styles.active : ""
+        } ${styles.fullWidth} `}
       >
-        <FontAwesomeIcon
-          icon={props.icon}
-          className={`${props.showText === true ? styles.marginRight : ""}`}
-        />
-        {props.showText && props.text}
+        <FontAwesomeIcon icon={props.icon} className={styles.marginRight} />
+        {props.text}
       </a>
     </Link>
   );

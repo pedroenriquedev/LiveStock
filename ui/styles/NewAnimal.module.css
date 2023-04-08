@@ -29,3 +29,21 @@
     padding: 1rem;
     resize: none;
 }
+
+@media all and (max-width: 600px) {
+    .form {
+        min-width: 90%;
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        margin-top: 3rem;
+    }
+
+    .form div {
+        grid-column: 1 / 1;
+    }
+    
+    .full {
+        grid-column: 1 / 1;
+    }
+}
+

@@ -1,18 +1,19 @@
 import { useEffect, useState } from "react";
 import { api, handleError } from "../../utils/axios";
 import styles from "../../styles/Batches.module.css";
-import Link from "next/link";
 import { formatePrice } from "../../utils/format";
 import CustomLink from "../../components/CustomLink";
 import Layout from "../../components/Layout";
+import BatchSkeleton from "../../components/Batches/BatchSkeleton";
 
 export default function Batches() {
   const [batches, setBatches] = useState([]);
-
+  const [isLoading, setIsLoading] = useState(true);
   const getBatches = async () => {
     try {
       const res = await api.get("/api/v1/batch");
       setBatches(res.data.data.data);
+      setIsLoading(false);
     } catch (error) {
       handleError(error);
     }
@@ -31,9 +32,13 @@ export default function Batches() {
     <Layout>
       <h2>Batches</h2>
       <CustomLink href={`/batches/create`} text={`Create a new batch`} />
-      {batches.length > 0 ? (
-        <div>
-          {batches.map((batch) => (
+
+      <div>
+        {isLoading && (
+          <BatchSkeleton classes={styles.batchSkeleton} batches={4} />
+        )}
+        {batches.length > 0 &&
+          batches.map((batch) => (
             <div key={batch._id} className={styles.batch}>
               <div>
                 <h3>Date</h3>
@@ -59,10 +64,7 @@ export default function Batches() {
               </div>
             </div>
           ))}
-        </div>
-      ) : (
-        <span>No batches</span>
-      )}
+      </div>
     </Layout>
   );
 }

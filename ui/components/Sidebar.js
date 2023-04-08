@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "../styles/Sidebar.module.css";
 import {
   faHome,
@@ -9,12 +9,22 @@ import {
   faStamp,
   faArrowUpRightDots,
   faBars,
+  faClose,
 } from "@fortawesome/free-solid-svg-icons";
 import SidebarLink from "./SidebarLink";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useRouter } from "next/router";
 
 function Sidebar() {
   const [showSidebar, setShowSideBar] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    setTimeout(() => {
+      setShowSideBar(false);
+    }, 800);
+  }, [router.asPath]);
+
   return (
     <div className={styles.sidebar}>
       <button
@@ -23,71 +33,45 @@ function Sidebar() {
           setShowSideBar((prevState) => !prevState);
         }}
       >
-        <FontAwesomeIcon icon={faBars} />
+        {!showSidebar ? (
+          <FontAwesomeIcon icon={faBars} />
+        ) : (
+          <FontAwesomeIcon icon={faClose} />
+        )}
       </button>
-      <ul>
-        <li className={styles.active}>
-          <SidebarLink
-            path="/"
-            text="home"
-            icon={faHome}
-            active={true}
-            showText={showSidebar}
-          />
-        </li>
-        <li>
-          <SidebarLink
-            showText={showSidebar}
-            path="/animals"
-            text="animals"
-            icon={faCow}
-          />
-        </li>
-        <li>
-          <SidebarLink
-            showText={showSidebar}
-            path="/pastures"
-            text="pastures"
-            icon={faPanorama}
-          />
-        </li>
-        <li>
-          <SidebarLink
-            showText={showSidebar}
-            path="/batches"
-            text="batches"
-            icon={faFolderOpen}
-          />
-        </li>
-      </ul>
-      <ul>
-        <li>
-          <SidebarLink
-            showText={showSidebar}
-            path="/simulation"
-            text="simulation"
-            icon={faFlask}
-          />
-        </li>
-        <li>
-          <SidebarLink
-            showText={showSidebar}
-            path="/sell"
-            text="sell"
-            icon={faStamp}
-          />
-        </li>
-      </ul>
-      <ul>
-        <li>
-          <SidebarLink
-            showText={showSidebar}
-            path="/growth"
-            text="growth"
-            icon={faArrowUpRightDots}
-          />
-        </li>
-      </ul>
+      <div className={`${!showSidebar && styles.hidden}`}>
+        <ul>
+          <li className={styles.active}>
+            <SidebarLink path="/" text="home" icon={faHome} />
+          </li>
+          <li>
+            <SidebarLink path="/animals" text="animals" icon={faCow} />
+          </li>
+          <li>
+            <SidebarLink path="/pastures" text="pastures" icon={faPanorama} />
+          </li>
+          <li>
+            <SidebarLink path="/batches" text="batches" icon={faFolderOpen} />
+          </li>
+        </ul>
+        <ul>
+          <li>
+            <SidebarLink path="/simulation" text="simulation" icon={faFlask} />
+          </li>
+          <li>
+            <SidebarLink path="/sell" text="sell" icon={faStamp} />
+          </li>
+        </ul>
+        <ul>
+          <li>
+            <SidebarLink
+              path="/growth"
+              text="growth"
+              icon={faArrowUpRightDots}
+            />
+          </li>
+        </ul>
+      </div>
     </div>
   );
 }

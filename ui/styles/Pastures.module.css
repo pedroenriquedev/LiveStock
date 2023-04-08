@@ -5,6 +5,12 @@
     align-items: center;
     padding: .5rem 2rem;
     border-radius: 4px;
+    height: 5.3rem;
+}
+
+.pastureSkeleton div {
+    margin: 2rem 0;
+    height: 5.3rem;
 }
 
 .pasture:hover {

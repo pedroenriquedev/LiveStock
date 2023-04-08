@@ -6,6 +6,9 @@
     margin-top: 1rem;
 }
 
+.animals > div {
+    margin: 2rem 0;
+}
 
 
 .alignRight {
@@ -33,22 +36,24 @@
 }
 
 .filtersContainer div label {
-    margin-right: 1rem;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    width: max-content;
+    width: 100%;
     font-size: 1.2rem;
+    height: 17px;
+}
+
+.filtersContainer div div div {
+    width: 100%;
+    display: block;
+    padding-right: 1rem;
+    height: 17px;
 }
 
 .filtersContainer div label input {
     margin-right: .5rem;
     width: 1.3rem;
 }
-
-
-
-
 
 .sortButton {
     font: inherit;
@@ -100,4 +105,8 @@
     padding: .1rem .4rem;
     margin-right: .5rem;
 }
+}
+
+.filterContainer {
+    grid-column: 1 / -1;
 }

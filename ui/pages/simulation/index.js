@@ -6,6 +6,7 @@ import SimulatedSale from "../../components/SimulatedSale";
 import styles from "../../styles/Simulation.module.css";
 import Button from "../../components/Button";
 import Layout from "../../components/Layout";
+import FilterSkeleton from "../../components/Simulation/FilterSkeleton";
 
 export default function Simulation() {
   const router = useRouter();
@@ -15,6 +16,8 @@ export default function Simulation() {
   const [sellingRate, setSellingRate] = useState(255);
   const [showSimulatedSale, setShowSimulatedSale] = useState(false);
   const [showFilters, setShowFilters] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isFetchingAnimals, setIsFetchingAnimals] = useState(false);
 
   const getPastures = async () => {
     try {
@@ -44,6 +47,7 @@ export default function Simulation() {
 
   const getAnimals = async (type, typeId) => {
     try {
+      setIsFetchingAnimals(true);
       const res = await api.get(`/api/v1/animal`, {
         params: {
           [type]: typeId,
@@ -55,6 +59,7 @@ export default function Simulation() {
       }));
 
       setAnimals(resAnimals);
+      setIsFetchingAnimals(false);
       setShowFilters(false);
     } catch (error) {
       handleError(error);
@@ -73,10 +78,19 @@ export default function Simulation() {
     setShowSimulatedSale(!show);
   };
 
+  const fetchData = async () => {
+    try {
+      await getPastures();
+      await getBatches();
+      setIsLoading(false);
+    } catch (error) {
+      handleError(error);
+    }
+  };
+
   useEffect(() => {
     if (!router.isReady) return;
-    getPastures();
-    getBatches();
+    fetchData();
   }, [router.isReady]);
 
   return (
@@ -99,38 +113,60 @@ export default function Simulation() {
                 ></input>
               </div>
               <h4>Simulate by:</h4>
-              <div>
-                <h4>Batches</h4>
-                <div className={styles.filterElementsContainer}>
-                  {allBatches.map((batch) => (
-                    <button
-                      key={batch._id}
-                      onClick={() => getAnimals("batch", batch._id)}
-                      className={styles.filterElement}
-                    >
-                      <h4>{batch.seller}</h4>
-                      <p>{formatDate(batch.date)}</p>
-                      <p>{`qty: ${batch.cattle.length}`}</p>
-                    </button>
-                  ))}
+              {isFetchingAnimals ? (
+                <div className={styles.loading}>
+                  <span>Simulating...</span>
                 </div>
-              </div>
+              ) : (
+                <>
+                  <div>
+                    <h4>Batches</h4>
+                    <div className={styles.filterElementsContainer}>
+                      {isLoading && (
+                        <FilterSkeleton
+                          filters={4}
+                          classes={styles.filterSkeleton}
+                        />
+                      )}
+                      {!isLoading &&
+                        allBatches.map((batch) => (
+                          <button
+                            key={batch._id}
+                            onClick={() => getAnimals("batch", batch._id)}
+                            className={styles.filterElement}
+                          >
+                            <h4>{batch.seller}</h4>
+                            <p>{formatDate(batch.date)}</p>
+                            <p>{`qty: ${batch.cattle.length}`}</p>
+                          </button>
+                        ))}
+                    </div>
+                  </div>
 
-              <div>
-                <h4>Pastures</h4>
-                <div className={styles.filterElementsContainer}>
-                  {allPastures.map((pasture) => (
-                    <button
-                      key={pasture._id}
-                      onClick={() => getAnimals("pasture", pasture._id)}
-                      className={styles.filterElement}
-                    >
-                      <h4>{pasture.name}</h4>
-                      <p>{`qty: ${pasture.herd.length}`}</p>
-                    </button>
-                  ))}
-                </div>
-              </div>
+                  <div>
+                    <h4>Pastures</h4>
+                    <div className={styles.filterElementsContainer}>
+                      {isLoading && (
+                        <FilterSkeleton
+                          filters={4}
+                          classes={styles.filterSkeleton}
+                        />
+                      )}
+                      {!isLoading &&
+                        allPastures.map((pasture) => (
+                          <button
+                            key={pasture._id}
+                            onClick={() => getAnimals("pasture", pasture._id)}
+                            className={styles.filterElement}
+                          >
+                            <h4>{pasture.name}</h4>
+                            <p>{`qty: ${pasture.herd.length}`}</p>
+                          </button>
+                        ))}
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
           )}
 

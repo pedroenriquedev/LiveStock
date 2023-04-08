@@ -65,14 +65,16 @@ ul {
 
 @media all and (max-width: 900px) {
     .pagesContainer {
-        padding: 2rem 1rem;
+        padding-bottom: 2rem;
+        padding-right: 1rem;
         padding-left: 2rem;
+        padding-top: 2rem;
+        overflow: none;
     }
 }
 
 @media all and (max-width: 600px) {
     .pagesContainer {
-        padding: 1rem .5rem;
         padding-left: 1rem;
     }
 }

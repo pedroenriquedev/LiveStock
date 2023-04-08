@@ -35,6 +35,12 @@
     color: rgb(110, 110, 110);
 }
 
+.filterSkeleton {
+    display: inline-block;
+    width: 11rem;
+    height: 11rem;
+}
+
 .filterElement:hover {
     background: rgb(255, 226, 80);
     border-color: rgb(255, 226, 80);
@@ -60,4 +66,11 @@
     width: 6rem;
     padding: .1rem .5rem;
     margin: .5rem 0;
+}
+
+.loading {
+    height: 50rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

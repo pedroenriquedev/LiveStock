@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { api, handleError } from "../../utils/axios";
 import GoBackButton from "../../components/GoBackButton";
-import Link from "next/link";
 import styles from "../../styles/PastureDetails.module.css";
 import Modal from "../../components/Modal";
 import MoveAnimals from "../../components/MoveAnimals";
@@ -10,6 +9,8 @@ import { formateGrowth } from "../../utils/format";
 import CustomLink from "../../components/CustomLink";
 import Button from "../../components/Button";
 import Layout from "../../components/Layout";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 export default function BatchDetails() {
   const router = useRouter();
@@ -19,6 +20,7 @@ export default function BatchDetails() {
   const [isModalOpen, setModalOpen] = useState(false);
   const [avgGrowth, setAvgGrowth] = useState(1);
   const [avgMonthlyGrowth, setAvgMonthlyGrowth] = useState(1);
+  const [isLoading, setIsLoading] = useState(true);
 
   const handleOpenModal = () => {
     setModalOpen(true);
@@ -49,10 +51,19 @@ export default function BatchDetails() {
     }
   };
 
+  const fetchData = async () => {
+    try {
+      await getPasture();
+      await getStats();
+      setIsLoading(false);
+    } catch (error) {
+      handleError(error);
+    }
+  };
+
   useEffect(() => {
     if (!router.isReady) return;
-    getPasture();
-    getStats();
+    fetchData();
   }, [router.isReady]);
 
   const handleCheckbox = (e) => {
@@ -99,62 +110,76 @@ export default function BatchDetails() {
   return (
     <Layout>
       <GoBackButton router={router} />
-      {pasture.herd && (
-        <div>
-          <div className={styles.details}>
-            <div>
-              <span>name</span>
-              <p>{pasture.name}</p>
-            </div>
-
-            <div>
-              <span>condition</span>
-              <p>{pasture.condition}</p>
-            </div>
-
-            <div>
-              <span>status</span>
-              <p>{pasture.status}</p>
-            </div>
-
-            <div>
-              <span>area</span>
-              <p>{pasture.area}</p>
-            </div>
-
-            <div>
-              <span>quantity</span>
-              <p>{pasture.herd && pasture.herd.length}</p>
-            </div>
-
-            <div>
-              <span>average growth</span>
-              <p>{avgGrowth > 1 ? formateGrowth(avgGrowth) : "N/A"}</p>
-            </div>
-
-            <div>
-              <span>average monthly growth</span>
-              <p>
-                {avgMonthlyGrowth > 1 ? formateGrowth(avgMonthlyGrowth) : "N/A"}
-              </p>
-            </div>
+      <div>
+        <div className={styles.details}>
+          <div>
+            <span>name</span>
+            <p>{isLoading ? <Skeleton /> : pasture.name}</p>
           </div>
 
           <div>
-            <h3>Herd</h3>
+            <span>condition</span>
+            <p>{isLoading ? <Skeleton /> : pasture.condition}</p>
+          </div>
 
-            <div className={styles.animalsContainer}>
-              <div className={styles.animalLabels}>
-                <div></div>
-                <span>name</span>
-                <span>color</span>
-                <span>breed</span>
-                <span>health</span>
-                <span>weight</span>
-                <span>growth</span>
-              </div>
-              <div className={styles.animals}>
-                {pasture.herd.map((animal) => (
+          <div>
+            <span>status</span>
+            <p>{isLoading ? <Skeleton /> : pasture.status}</p>
+          </div>
+
+          <div>
+            <span>area</span>
+            <p>{isLoading ? <Skeleton /> : pasture.area}</p>
+          </div>
+
+          <div>
+            <span>quantity</span>
+            <p>{isLoading ? <Skeleton /> : pasture.herd.length}</p>
+          </div>
+
+          <div>
+            <span>average growth</span>
+            <p>
+              {isLoading ? <Skeleton /> : formateGrowth(avgGrowth) || "N/A"}
+            </p>
+          </div>
+
+          <div>
+            <span>average monthly growth</span>
+            <p>
+              {isLoading ? (
+                <Skeleton />
+              ) : (
+                formateGrowth(avgMonthlyGrowth) || "N/A"
+              )}
+            </p>
+          </div>
+        </div>
+
+        <div>
+          <h3>Herd</h3>
+
+          <div className={styles.animalsContainer}>
+            <div className={styles.animalLabels}>
+              <div></div>
+              <span>name</span>
+              <span>color</span>
+              <span>breed</span>
+              <span>health</span>
+              <span>weight</span>
+              <span>growth</span>
+            </div>
+            <div className={styles.animals}>
+              {isLoading &&
+                Array(7)
+                  .fill(0)
+                  .map((item, i) => (
+                    <div key={i}>
+                      <Skeleton height={"100%"} />
+                    </div>
+                  ))}
+              {!isLoading &&
+                pasture.herd.map((animal) => (
                   <label
                     htmlFor={animal._id}
                     key={animal._id}
@@ -181,34 +206,33 @@ export default function BatchDetails() {
                     />
                   </label>
                 ))}
-              </div>
             </div>
           </div>
-
-          <div className={styles.actions}>
-            <Button
-              color={toBeChangedArray.length < 1 ? "gray" : "red"}
-              onClick={handleRemoveAnimals}
-            >
-              Remove
-            </Button>
-
-            <Button
-              color={toBeChangedArray.length < 1 ? "gray" : "yellow"}
-              onClick={handleMoveAnimals}
-            >
-              Move
-            </Button>
-
-            <CustomLink href={"/animals"} text={"Add"} />
-            {isModalOpen && (
-              <Modal visible={handleOpenModal} cancel={handleCloseModal}>
-                <MoveAnimals animals={toBeChangedArray} pasture={pasture} />
-              </Modal>
-            )}
-          </div>
         </div>
-      )}
+
+        <div className={styles.actions}>
+          <Button
+            color={toBeChangedArray.length < 1 ? "gray" : "red"}
+            onClick={handleRemoveAnimals}
+          >
+            Remove
+          </Button>
+
+          <Button
+            color={toBeChangedArray.length < 1 ? "gray" : "yellow"}
+            onClick={handleMoveAnimals}
+          >
+            Move
+          </Button>
+
+          <CustomLink href={"/animals"} text={"Add"} />
+          {isModalOpen && (
+            <Modal visible={handleOpenModal} cancel={handleCloseModal}>
+              <MoveAnimals animals={toBeChangedArray} pasture={pasture} />
+            </Modal>
+          )}
+        </div>
+      </div>
     </Layout>
   );
 }

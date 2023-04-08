@@ -9,22 +9,30 @@
 
 @media all and (max-width: 900px) {
     .sidebar {
-        padding: 1rem 2rem;
+        padding: 0;
+        width: fit-content;
+        padding: 0;
+        position: absolute;
+        background-color: #fff;
+        z-index: 500;
+    }
+
+    .sidebar div {
+        
+        width: 100vw;
+        height: 90vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .sidebar ul {
+        width: fit-content;
+        margin-bottom: 0 !important;
     }
 }
 
-@media all and (max-width: 600px) {
-    .sidebar {
-        padding: .5rem 1rem;
-    }
-}
-
-@media all and (max-width: 400px) {
-    .sidebar {
-        padding-left: .2rem;
-        padding-right: .2rem;
-    }
-}
 
 .sidebar::after {
     content: '';
@@ -37,6 +45,13 @@
     left: 99%;
 }
 
+@media all and (max-width: 900px) {
+    .sidebar::after {
+        display: none;
+    }
+}
+
+
 .sidebar ul:not(:last-of-type) {
     margin-bottom: 5rem;
 }
@@ -44,6 +59,14 @@
 .sidebar ul:first-of-type {
     margin-top: 3rem;
 }
+
+@media all and (max-width: 900px) {
+    .sidebar ul:first-of-type {
+        margin-top: 0;
+    }
+}
+
+
 
 .sidebar ul li {
     margin-bottom: 2rem;
@@ -54,21 +77,33 @@
 .hamburger {
     background: none;
     border: none;
-    font-size: 2.2rem;
-    cursor: pointer;
+    font-size: 4rem;
+    color: black;
+    cursor: pointer;    
     padding: 1rem 2rem;
     transition: all .2s;
     border-radius: 3px;
     border: 1px solid transparent;
+    display: none;
+    position: fixed;
+    top: 0;
+    right: 1%;
 }
 
-@media all and (max-width: 600px) {
+
+@media all and (max-width: 900px) {
     .hamburger {
-        display: none;
+        display: block;
     }
 }
 
 
-.hamburger:hover {
-    border: 1px solid black;
+.hidden {
+    display: block;
+}
+
+@media all and (max-width: 900px) {
+    .hidden {
+        display: none !important;
+    }
 }

@@ -1,7 +1,7 @@
 .details {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-row-gap: 2rem;
+    gap: 2rem;
     margin: 3rem 0;
     font-size: 1.4rem;
 }
@@ -9,6 +9,13 @@
 .details div span {
     text-transform: uppercase;
     font-weight: bold;
+}
+
+.animals div {
+    margin: 1rem 0;
+    position: relative;
+    height: 5.55rem;
+    border-radius: 4px;
 }
 
 .label {
@@ -88,10 +95,10 @@
 }
 
 
-@media all and (max-width: 450px) {
+@media all and (max-width: 900px) {
     .label, .animalLabels {
         grid-template-columns: 1rem 7rem repeat(6, 1fr);
-        gap: .5rem;
+        gap: 2rem;
         padding: .5rem 0;
     }
 
@@ -99,6 +106,11 @@
         margin: 3rem 0;
         padding: .3rem .6rem;
         border-radius: 4px;
+    }
+
+    .animals div {
+        margin: 3rem 0;
+        height: 4.5rem;
     }
     
     .details {

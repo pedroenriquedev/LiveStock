@@ -3,19 +3,23 @@ import { useRouter } from "next/router";
 import { api, handleError } from "../utils/axios";
 import styles from "../styles/Home.module.css";
 import DoughnutChart from "../components/DoughnutChart";
-import { formateGrowth, formatePrice } from "../utils/format";
+import { formateFloat, formateGrowth, formatePrice } from "../utils/format";
 import Layout from "../components/Layout";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 export default function Home() {
   const [generalStats, setGeneralStats] = useState([]);
   const [healthStats, setHealthStats] = useState([]);
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(true);
   const getStats = async () => {
     try {
       const res = await api.post(`/api/v1/animal/stats`);
       const { stats } = res.data.data;
       setGeneralStats({ ...stats.generalStats[0] });
       setHealthStats(stats.healthStats);
+      setIsLoading(false);
     } catch (error) {
       handleError(error);
     }
@@ -49,27 +53,49 @@ export default function Home() {
           <div className={styles.general}>
             <div>
               <span>active cattle</span>
-              <p>{generalStats.count}</p>
+              <p>{isLoading ? <Skeleton /> : generalStats.count}</p>
             </div>
 
             <div>
               <span>average weight</span>
-              <p>{generalStats.avgWeight}</p>
+              <p>
+                {isLoading ? (
+                  <Skeleton />
+                ) : (
+                  formateFloat(generalStats.avgWeight)
+                )}
+              </p>
             </div>
 
             <div>
               <span>invesment</span>
-              <p>{`R$${formatePrice(generalStats.initialPriceSum)}`}</p>
+              <p>
+                {isLoading ? (
+                  <Skeleton />
+                ) : (
+                  `R$${formatePrice(generalStats.initialPriceSum)}`
+                )}
+              </p>
             </div>
 
             <div>
               <span>average monthly growth</span>
-              <p>{`${formateGrowth(generalStats.avgMonthlyGrowth)}`}</p>
+              <p>
+                {isLoading ? (
+                  <Skeleton />
+                ) : (
+                  `${formateGrowth(generalStats.avgMonthlyGrowth)}`
+                )}
+              </p>
             </div>
           </div>
           <div className={styles.health}>
             <h3>Health Stats</h3>
-            <DoughnutChart healthStats={healthStats} />
+            {isLoading ? (
+              <Skeleton height={250} />
+            ) : (
+              <DoughnutChart healthStats={healthStats} />
+            )}
           </div>
         </div>
       </div>

@@ -36,10 +36,10 @@
 
 @media all and (max-width: 600px) {
     .container {
-        max-width: 80vw;
-        min-width: 65vw;
-        max-height: 90vh;
-        min-height: 70vh;
+        max-width: 98%;
+        min-width: 90%;
+        max-height: 98%;
+        min-height: 30%;
     }
 }
 

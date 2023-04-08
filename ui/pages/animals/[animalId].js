@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { api, handleError } from "../../utils/axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import styles from "../../styles/AnimalDetails.module.css";
 import { formatDate, formateGrowth, formatePrice } from "../../utils/format";
 import Link from "next/link";
@@ -12,12 +12,15 @@ import AddWeightLog from "../../components/AddWeightLog";
 import LineChart from "../../components/LineChart";
 import Button from "../../components/Button";
 import Layout from "../../components/Layout";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 export default function AnimalDetails() {
   const router = useRouter();
   const { animalId } = router.query;
   const [animal, setAnimal] = useState("");
   const [isModalOpen, setModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const handleOpenModal = () => {
     setModalOpen(true);
@@ -31,6 +34,7 @@ export default function AnimalDetails() {
     try {
       const res = await api.get(`/api/v1/animal/${animalId}`);
       setAnimal(res.data.data.data);
+      setIsLoading(false);
     } catch (error) {
       handleError(error);
     }
@@ -47,57 +51,71 @@ export default function AnimalDetails() {
       <div className={styles.details}>
         <div>
           <span>name</span>
-          <p>{animal.name || "N/A"}</p>
+          <p>{isLoading ? <Skeleton /> : animal.name}</p>
         </div>
 
         <div>
           <span>color</span>
-          <p>{animal.color}</p>
+          <p>{isLoading ? <Skeleton /> : animal.color}</p>
         </div>
 
         <div>
           <span>date of purchase</span>
-          <p>{formatDate(animal.dateOfPurchase)}</p>
+          <p> {isLoading ? <Skeleton /> : formatDate(animal.dateOfPurchase)}</p>
         </div>
 
         <div>
           <span>health</span>
-          <p>{animal.health}</p>
+          <p>{isLoading ? <Skeleton /> : animal.health}</p>
         </div>
 
         <div>
           <span>breed</span>
-          <p>{animal.breed || "N/A"}</p>
+          <p>{isLoading ? <Skeleton /> : animal.breed}</p>
         </div>
 
         <div>
           <span>initial weight</span>
-          <p>{animal.initialWeight}kg</p>
+          <p>{!isLoading ? `${animal.initialWeight}kg` : <Skeleton />}</p>
         </div>
 
         <div>
           <span>rate</span>
-          <p>{`R$${animal.priceRatio}`}</p>
+          <p>{!isLoading ? `R$${animal.priceRatio}` : <Skeleton />}</p>
         </div>
 
         <div>
           <span>initial price</span>
-          <p>{`R$${formatePrice(animal.initialPrice)}`}</p>
+          <p>
+            {isLoading ? (
+              <Skeleton />
+            ) : (
+              `R$${formatePrice(animal.initialPrice)}`
+            )}
+          </p>
         </div>
 
         <div>
           <span>current weight</span>
-          <p>{animal.currentWeight || animal.initialWeight}kg</p>
+          <p>
+            {animal.currentWeight ? `${animal.currentWeight}kg` : <Skeleton />}
+          </p>
         </div>
 
         <div>
           <span>growth</span>
-          <p>{formateGrowth(animal.growthRatio)}</p>
+          <p>{!isLoading ? formateGrowth(animal.growthRatio) : <Skeleton />}</p>
         </div>
 
         <div>
           <span>avg monthly growth</span>
-          <p>{formateGrowth(animal.averageMonthlyGrowth)}</p>
+          <p>
+            {!isLoading ? (
+              formateGrowth(animal.averageMonthlyGrowth)
+            ) : (
+              <Skeleton />
+            )}
+          </p>
         </div>
 
         <div>
@@ -111,7 +129,7 @@ export default function AnimalDetails() {
               </Link>
             )}
           </span>
-          <p>{animal.pasture || "N/A"}</p>
+          <p>{isLoading ? <Skeleton /> : animal.pasture || "N/A"}</p>
         </div>
 
         <div>
@@ -125,7 +143,7 @@ export default function AnimalDetails() {
               </Link>
             )}
           </span>
-          <p>{animal.batch || "N/A"}</p>
+          <p>{isLoading ? <Skeleton /> : animal.batch || "N/A"}</p>
         </div>
 
         <div>
@@ -134,7 +152,11 @@ export default function AnimalDetails() {
         </div>
       </div>
 
-      {animal.weightLog && <LineChart weightLog={animal.weightLog} />}
+      {isLoading ? (
+        <Skeleton height={250} />
+      ) : (
+        <LineChart weightLog={animal.weightLog} />
+      )}
 
       <div className={styles.action}>
         <Button onClick={handleOpenModal}>Add Weight Log</Button>
@@ -146,6 +168,13 @@ export default function AnimalDetails() {
         </Modal>
       )}
       <div className={styles.weightLogContainer}>
+        {isLoading && (
+          <>
+            <Skeleton height={80} />
+            <Skeleton height={80} />
+            <Skeleton height={80} />
+          </>
+        )}
         {animal.weightLog &&
           animal.weightLog
             .slice(0)
