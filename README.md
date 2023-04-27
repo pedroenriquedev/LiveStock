@@ -1,4 +1,4 @@
-# Livestock Managment App
+# Herdmaster
 
 Tool to help farmers with tracking their inventory and cattle growth.
 
