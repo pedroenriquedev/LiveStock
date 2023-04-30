@@ -1,7 +1,10 @@
 import axios from "axios";
 
 export const api = axios.create({
-  baseURL: process.env.API_BASE_URL || "https://livestockapi.onrender.com/",
+  baseURL:
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:8000/"
+      : "https://livestockapi.onrender.com/",
 });
 
 export function handleError(error) {

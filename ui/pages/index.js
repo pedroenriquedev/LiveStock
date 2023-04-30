@@ -34,9 +34,8 @@ export default function Home() {
     else if (hour < 18) welcomeText = welcomeTypes[1];
     else welcomeText = welcomeTypes[2];
 
-    return `${welcomeText}, User!`;
+    return `${welcomeText}!`;
   };
-  console.log(generalStats);
   useEffect(() => {
     if (!router.isReady) return;
     getStats();

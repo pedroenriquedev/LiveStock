@@ -46,11 +46,9 @@ function MyApp({ Component, pageProps, router }) {
             <Sidebar />
           </div>
           <SkeletonTheme>
-            <AnimatePresence mode="wait" initial={false}>
-              <div className="pagesContainer" key={router.asPath}>
-                <Component {...pageProps} />
-              </div>
-            </AnimatePresence>
+            <div className="pagesContainer" key={router.asPath}>
+              <Component {...pageProps} />
+            </div>
           </SkeletonTheme>
         </div>
       </div>
