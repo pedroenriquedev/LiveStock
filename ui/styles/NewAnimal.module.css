@@ -1,7 +1,9 @@
 .form {
     display: grid;
     min-width: 50vw;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+    align-content: center;
     gap: 2rem;
     margin-top: 2rem;
 }
@@ -13,14 +15,47 @@
     text-transform: capitalize;
     border: none;
     border-radius: 4px;
+    margin-top: .6rem;
+    box-shadow: 7px 6px 57px -24px rgba(0,0,0,0.75);
+    outline: none;
+}
+
+.form input:focus, .form textarea:focus {
+    outline: 3px solid rgb(255, 226, 80);
+}
+
+.number {
+    width: 8rem;
 }
 
 .form label {
     text-transform: capitalize;
+    font-weight: bold;
 }
 
-.form div {
-    grid-column: 1 / 3;
+.form div:last-of-type {
+    grid-column: 1 / -1;
+    justify-self: flex-start;
+    width: 100%;
+}
+.form div:last-of-type label {
+    display: block;
+}
+
+.form div:last-of-type textarea {
+    width: 100%;
+    margin-top: .7rem;
+    border: none;
+    border-radius: 4px;
+}
+
+.health label {
+    margin-right: 2rem;
+}
+
+.health select {
+    padding: .5rem 1rem;
+    border-radius: 4px;
 }
 
 .full {
@@ -30,20 +65,27 @@
     resize: none;
 }
 
-@media all and (max-width: 600px) {
+@media all and (max-width: 900px) {
     .form {
-        min-width: 90%;
-        grid-template-columns: 1fr;
-        gap: 1rem;
-        margin-top: 3rem;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
     }
 
-    .form div {
-        grid-column: 1 / 1;
+    .form div:nth-of-type(1) input, .form div:nth-of-type(2) input, .form div:nth-of-type(3) input {
+        width: 100%;
     }
     
-    .full {
-        grid-column: 1 / 1;
-    }
+    
 }
 
+@media all and (max-width: 600px) {
+    .form {
+        width: 50%;
+        margin-left: auto;
+        margin-right: auto;
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    
+}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "../styles/NewAnimal.module.css";
 import Button from "./Button";
 
@@ -17,6 +17,7 @@ const NewAnimal = ({
   const [customRate, setCustomRate] = useState(rate);
   const [health, setHealth] = useState("healthy");
   const [description, setDescription] = useState("");
+  const [isValid, setIsValid] = useState(false);
 
   const handleForm = (e) => {
     e.preventDefault();
@@ -38,35 +39,69 @@ const NewAnimal = ({
     getAnimal(animal);
     closeModal();
   };
+
+  useEffect(() => {
+    if (
+      !breed ||
+      breed.length < 1 ||
+      !color ||
+      color.length < 1 ||
+      weight < 30 ||
+      customRate < 1
+    ) {
+      setIsValid(false);
+    } else {
+      setIsValid(true);
+    }
+  }, [weight, breed, customRate, color]);
+
   return (
     <div>
       <h2>Cattle information</h2>
 
       <form className={styles.form} onSubmit={handleForm}>
-        <input
-          placeholder="name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <input
-          placeholder="color"
-          value={color}
-          onChange={(e) => setColor(e.target.value)}
-          required
-        />
-        <input
-          placeholder="breed"
-          value={breed}
-          onChange={(e) => setBreed(e.target.value)}
-          required
-        />
-        <input
-          placeholder="weight (kg)"
-          type="number"
-          value={weight}
-          onChange={(e) => setWeight(e.target.value)}
-          required
-        />
+        <div>
+          <label htmlFor="name">name</label>
+          <input
+            id="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+        </div>
+
+        <div>
+          <label htmlFor="color">color</label>
+          <input
+            id="color"
+            value={color}
+            onChange={(e) => setColor(e.target.value)}
+            required
+          />
+        </div>
+
+        <div>
+          <label htmlFor="breed">breed</label>
+          <input
+            id="breed"
+            value={breed}
+            onChange={(e) => setBreed(e.target.value)}
+            required
+          />
+        </div>
+
+        <div>
+          <label htmlFor="weight">weight (kg)</label>
+          <input
+            className={styles.number}
+            id="weight"
+            type="number"
+            min={30}
+            value={weight}
+            onChange={(e) => setWeight(e.target.value)}
+            required
+          />
+        </div>
+
         {showDateOfPurchase && (
           <div>
             <label>date of purchase</label>
@@ -80,16 +115,22 @@ const NewAnimal = ({
         )}
 
         {showPriceRatio && (
-          <input
-            defaultValue={rate ? rate : 0}
-            type="number"
-            step="0.01"
-            onChange={(e) => setCustomRate(e.target.value)}
-            required
-          />
+          <div>
+            <label htmlFor="rate">rate</label>
+            <input
+              className={styles.number}
+              defaultValue={rate ? rate : 1}
+              id="rate"
+              type="number"
+              step="0.01"
+              min={1}
+              onChange={(e) => setCustomRate(e.target.value)}
+              required
+            />
+          </div>
         )}
 
-        <div>
+        <div className={styles.health}>
           <label>health condition</label>
           <select
             name="health"
@@ -104,14 +145,17 @@ const NewAnimal = ({
         </div>
 
         {/* critical, poor, good, healthy */}
-        <textarea
-          placeholder="Description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          className={styles.full}
-        />
+        <div>
+          <label htmlFor="description">description</label>
+          <textarea
+            id="description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            className={styles.full}
+          />
+        </div>
 
-        <Button>Submit</Button>
+        <Button color={isValid ? "yellow" : "gray"}>Submit</Button>
         {/* when hit submit, send all data out via props */}
       </form>
     </div>

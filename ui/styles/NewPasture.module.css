@@ -1,5 +1,31 @@
 .form input, .form select{
     display: block;
+    padding: .5rem 1rem;
+    margin-top: .6rem;
+    text-transform: capitalize;
+    border: none;
+    border-radius: 4px;
+    box-shadow: 7px 6px 57px -24px rgba(0,0,0,0.75);
+    outline: none;
+}
+
+.form label {
+    font-weight: bold;
+}
+
+.form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    width: 100%;
+}
+
+.form h3, .form button {
+    grid-column: 1 / -1;
+}
+
+.form button {
+    margin-top: 1rem;
 }
 
 .form div {
@@ -8,4 +34,19 @@
 
 .form div:last-of-type input {
     width: 5rem;
+}
+
+.number {
+    width: 8rem;
+}
+
+@media all and (max-width: 900px) {
+
+    .form div:nth-of-type(1) input {
+        width: 100%;
+    }
+
+    .form div:nth-of-type(1) {
+        grid-column: 1 / -1;
+    }
 }

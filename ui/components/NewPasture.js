@@ -53,6 +53,19 @@ const NewPasture = () => {
       </div>
 
       <div>
+        <label htmlFor="area">Area (m²)</label>
+        <input
+          className={styles.number}
+          type="number"
+          id="area"
+          required
+          min={1}
+          value={area}
+          onChange={(e) => setArea(e.target.value)}
+        ></input>
+      </div>
+
+      <div>
         <label htmlFor="condition">Condition</label>
         <select
           name="pastures"
@@ -69,18 +82,6 @@ const NewPasture = () => {
             </option>
           ))}
         </select>
-      </div>
-
-      <div>
-        <label htmlFor="area">Area</label>
-        <input
-          type="number"
-          id="area"
-          required
-          min={1}
-          value={area}
-          onChange={(e) => setArea(e.target.value)}
-        ></input>
       </div>
 
       <Button color={isValid ? "yellow" : "gray"}>Submit</Button>

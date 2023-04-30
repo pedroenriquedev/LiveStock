@@ -371,6 +371,7 @@ export default function Home() {
           <NewAnimal
             getAnimal={handleNewAnimal}
             closeModal={handleAnimalCloseModal}
+            rate={1}
           />
         </Modal>
       )}

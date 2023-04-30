@@ -16,7 +16,7 @@
 }
 
 .container {
-    background: rgb(241, 240, 240);
+    background: rgb(240, 240, 240);
     display: block;
     position: fixed;
     left: 50%;
@@ -34,12 +34,12 @@
     animation-timing-function: ease-in;
 }
 
-@media all and (max-width: 600px) {
+@media all and (max-width: 900px) {
     .container {
         max-width: 98%;
-        min-width: 90%;
+        min-width: 70%;
         max-height: 98%;
-        min-height: 30%;
+        min-height: fit-content;
     }
 }
 
